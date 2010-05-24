@@ -1,5 +1,7 @@
 set :application, "FamilyChores"
-set :repository,  "git@github.com:Falex/Family_Chores_Calendar.git" #git://github.com/Falex/Family_Chores_Calendar.git"
+#set :repository,  "git@github.com:Falex/Family_Chores_Calendar.git" #git://github.com/Falex/Family_Chores_Calendar.git"
+set :repository,  "ssh://fhs30412@repos.mediacube.at/opt/git/intern_fcal.git/"
+
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
@@ -9,7 +11,8 @@ role :app, "spock.fh-salzburg.ac.at"                      # This may be the same
 role :db,  "spock.fh-salzburg.ac.at", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
-set :deploy_to, "/var/www/virthosts/pink.multimediatechnology.at/term4/QPT2b/"
+#set :deploy_to, "/var/www/virthosts/pink.multimediatechnology.at/term4/QPT2b/"
+set :deploy_to, "/var/www/virthosts/alexandraonrails.mediacube.at/"
 set :user, "fhs30412"
 
 set :use_sudo, false
