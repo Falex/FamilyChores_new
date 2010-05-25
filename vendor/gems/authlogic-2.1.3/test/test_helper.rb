@@ -1,5 +1,6 @@
 require "test/unit"
 require "rubygems"
+require "bundler"
 require "ruby-debug"
 require "active_record"
 require "active_record/fixtures"
