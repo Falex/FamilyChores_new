@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :icalfiles
   
   
+  
   map.root :controller => 'user_sessions', :action => 'new' 
   #map.resources :calendars, :has_many => users
   #map.resources :families, :has_many => :users
