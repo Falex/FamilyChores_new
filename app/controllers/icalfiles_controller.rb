@@ -4,6 +4,33 @@ class IcalfilesController < ApplicationController
     #@chores = Chore.all
 	
 	#my_file = File.new("famcalendar.ics", "w")
+	#my_file.save
+	
+
+    respond_to do |format|
+	  #format.ics {render :ics => generate_ics()}
+      format.html # index.html.erb
+	  
+      #format.xml  { render :xml => @icalfiles }
+    end
+  end
+  
+  def show
+    #@chores = Chore.all
+	
+	#my_file = File.new("famcalendar.ics", "w")
+	#my_file.save
+	
+
+    respond_to do |format|
+	  #format.html # index.html.erb
+	  format.ics {render :ics => generate_ics() }
+      
+      #format.xml  { render :xml => @icalfiles }
+    end
+  end
+  
+  def generate_ics
 	my_file = File.new("famcalendar.ics", "r+")
 	my_file.write "BEGIN:VCALENDAR" + "\n"
 	
@@ -21,18 +48,5 @@ class IcalfilesController < ApplicationController
 
 	my_file.write "END:VEVENT" + "\n"
 	my_file.write "END:VCALENDAR"
-	
-
-	
-	
-	
-	#my_file.save
-	
-
-    respond_to do |format|
-	  format.ics {render :ics => @icalfiles}
-      format.html # index.html.erb
-      format.xml  { render :xml => @icalfiles }
-    end
   end
 end

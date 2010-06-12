@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :configurations, :has_many => :users
   map.resources :chores
   map.resources :rewards
+  map.resources :icalfiles
   
   
   map.root :controller => 'user_sessions', :action => 'new' 
