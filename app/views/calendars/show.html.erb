@@ -22,7 +22,8 @@
   <%=h @calendar.updated_at.strftime('%d.%m.%Y') %>
 </p>
 
-
+<%
+=begin %>
 <div id="calendar_grid">
 <% 7.times  do |x|%>
 <ul id ="calendar_entries">
@@ -36,17 +37,58 @@
   <% unless @calendar.events.empty? %>
     <% @calendar.events.each do |event| %>
       <% if event.start_on.day == time.day %>
-		<li id="sortable">
+		<li id=time.day>
 		   <%=h event.description %><br/>
 		   <%=h event.user.login %>
 		   <%= image_tag(event.chore.image_url) %> 
 		</li>
 	  <% end %>
     <% end %>
-  <% end %>
+  <% end %>  
 </ul>
 <% end %>
 </div>
+<%
+=end %>
+
+<div id= "calendar_grid">
+<table>
+<tr id ="calendar_entries">
+<% 7.times  do |x|%>
+    <% time = Time.now.beginning_of_week + x * 86400%>
+    <td id="name_of_day">
+      <%= time.strftime("%d") %>
+	  <br />
+	  <%= time.strftime("%A") %>
+    </td>
+<% end %>
+ </tr>
+<% usedAlready = {} %>
+<% 4.times  do |a|%>
+  <tr id="sortable">
+  <% 7.times do |x| %>
+    <% time = Time.now.beginning_of_week + x * 86400%>
+	      <td id=x>
+				 <% z=0 %>
+					<% @entries.each do |event| %>
+						<% if event.start_on.day == time.day && !usedAlready.has_key?(z)%>
+							<%= a %>
+							<%= x %>
+							<%= event.start_on.day %> 
+						 <%= image_tag(event.chore.image_url) %> 
+						 <% usedAlready[z] = true %>
+						 <% break %>
+						<% end %>
+						<% z= z+1 %>
+					<% end %>
+				</td>
+	
+	<% end %>
+  </tr>
+<% end %>
+</table>
+</div>
+
 
 <div id="details">
 <div id="members">

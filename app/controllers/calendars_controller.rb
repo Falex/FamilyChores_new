@@ -29,6 +29,7 @@ class CalendarsController < ApplicationController
 	@family = Fam.find(:all, :conditions => ["id=?", @family_id])
     #@calendar = @user.calendars.find(params[:id])
 	@calendar = @family[0].users[0].calendars.find(params[:id])
+	@entries = @calendar.events;
 	#@family = @calendar.families
 	#@family = Family.find(:all, :conditions => ["id=?", "1"])
 	@user = User.find(:all, :conditions => ["id=?", @calendar.user_id])

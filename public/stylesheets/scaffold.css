@@ -195,3 +195,10 @@ li{
 margin:1px;
 padding:5px;
 	}
+	
+td{
+width:100px;
+color: #000000;
+background-color: #FFFF00;
+height: 100px;
+}
