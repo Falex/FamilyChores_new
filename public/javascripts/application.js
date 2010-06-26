@@ -1,6 +1,7 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+
 jQuery.ajaxSetup({ 'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")} })
 02	 
 03	function _ajax_request(url, data, callback, type, method) {
@@ -85,7 +86,7 @@ jQuery.ajaxSetup({ 'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "
 82	}
 83	 
 84	$(document).ready(function() {
-85	 
+85	
 86	// All non-GET requests will add the authenticity token
 87	  // if not already present in the data packet
 88	 $(document).ajaxSend(function(event, request, settings) {

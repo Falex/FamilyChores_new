@@ -1,5 +1,6 @@
 body { 
   background-color: #FFE4E1; 
+  background: transparent url(../images/HG.jpg)no-repeat scroll 0 0;
   margin-left:auto;
   margin-right:auto;
   width: 1000px;
@@ -187,8 +188,10 @@ left:40;
 	
 #name_of_day{
 height:30px;
-font-family:Snap ITC;
+font-family:Miriam;
 font-size: 15px;
+color:white;
+background: transparent url(../images/Kalendertageaktiv.png)no-repeat scroll 0 0;
 }
 	
 li{
@@ -197,8 +200,17 @@ padding:5px;
 	}
 	
 td{
-width:100px;
+width:82px;
+max-width: 82px;
+max-height: 80px;
 color: #000000;
-background-color: #FFFF00;
-height: 100px;
+overflow:scroll;
+height: 80px;
+background: transparent url(../images/Kalenderfeld_dark.png)no-repeat scroll 0 0;
+
+}
+
+#nav ul{
+float:left;
+list-style-type: none;
 }
