@@ -6,18 +6,13 @@
 		$("tbody").sortable({items: 'td', containment: 'table' });
 		$("td").hoverbox();
 		
-	
+		
 	
 	});
 	</script>
+	
 
-<h2><%=h @calendar.title %></h2>
-<h2><%= @login %></h2>
-<h3>Details</h3>
-<p>
-  <i>Description:</i><br/>
-  <%=h @calendar.description %>
-</p>
+
 <p>
   <i>Last Calender Update On:</i><br/>
   <%=h @calendar.updated_at.strftime('%d.%m.%Y') %>
@@ -74,7 +69,7 @@
 			 <% z=0 %>
 				<% @entries.each do |event| %>
 					<% if event.start_on.day == time.day && !usedAlready.has_key?(z)%>
-						<span title="<%= event.description%>">
+						<%= @spantitle = "<span title='#{event.description}'>" %>
 							<%= a %>
 							<%= x %>
 							<%= event.start_on.day %> 

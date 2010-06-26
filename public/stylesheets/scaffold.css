@@ -1,10 +1,14 @@
 body { 
-  background-color: #FFE4E1; 
-  background: transparent url(../images/HG.jpg)no-repeat scroll 0 0;
+ /* background-color: #FFE4E1; */
+  background-color: #FFFFFF;
   margin-left:auto;
   margin-right:auto;
   width: 1000px;
   color: white; 
+}
+
+#wrapper{
+background: transparent url(../images/HG.jpg)no-repeat scroll 0 0;
 }
 
 body, p, ol, ul, td {
@@ -12,6 +16,8 @@ body, p, ol, ul, td {
   font-size: 13px;
   line-height: 18px;
 }
+
+
 
 h1 {
 width: 550px;
@@ -137,9 +143,7 @@ color: orange;
 }
 
 td a{
-margin-left:5px;
-margin-right:5px;
-padding: 3px;
+
 }
 
 #details {
@@ -192,6 +196,7 @@ font-family:Miriam;
 font-size: 15px;
 color:white;
 background: transparent url(../images/Kalendertageaktiv.png)no-repeat scroll 0 0;
+padding-bottom:20px;
 }
 	
 li{
@@ -204,13 +209,18 @@ width:82px;
 max-width: 82px;
 max-height: 80px;
 color: #000000;
-overflow:scroll;
 height: 80px;
 background: transparent url(../images/Kalenderfeld_dark.png)no-repeat scroll 0 0;
-
+overflow:hidden;
 }
+
 
 #nav ul{
 float:left;
 list-style-type: none;
+}
+#nav{
+background: transparent url(../images/Stange.png)no-repeat scroll 0 0;
+position:relative;
+
 }
