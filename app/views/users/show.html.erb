@@ -2,7 +2,12 @@
 
 <p><%= link_to 'Edit Account', [:edit, @user] %></p>
 
-<img src="<%=h gravatar_url @user.email %>" alt="account picture" />
+<!-- <img src="<%=h gravatar_url @user.email %>" alt="account picture" /> -->
+
+
+<div id="profile_image">
+	<%= image_tag @user.photo.url %>
+</div>
 
 <p>
   Name:<br/>

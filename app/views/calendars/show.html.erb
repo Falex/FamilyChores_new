@@ -53,9 +53,8 @@
 <% 7.times  do |x|%>
     <% time = Time.now.beginning_of_week + x * 86400%>
     <td id="name_of_day">
-      <%= time.strftime("%d") %>
-	  <br />
-	  <%= time.strftime("%A") %>
+      <%= time.strftime("%a") %>
+	  <p class="day"><%= time.strftime("%d") %></p>
     </td>
 <% end %>
  </tr>
@@ -69,10 +68,12 @@
 			 <% z=0 %>
 				<% @entries.each do |event| %>
 					<% if event.start_on.day == time.day && !usedAlready.has_key?(z)%>
+					  <!--[if IE]>
 						<%= @spantitle = "<span title='#{event.description}'>" %>
-							<%= a %>
-							<%= x %>
-							<%= event.start_on.day %> 
+						<![endif]-->
+						<![if !IE]>
+						<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
+						<![endif]>
 							<%= image_tag(event.chore.image_url) %> 
 							<% usedAlready[z] = true %>
 							<% break %>

@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :events, :through => :calendars
   has_and_belongs_to_many :rewards
   
+  has_attached_file :photo
+  validates_attachment_size :photo, :less_than => 100.kilobytes
+	validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png']
+  
   #attr_accessible :login, :email, :id, :password, :password_confirmation, :role
   
   #def role_symbols

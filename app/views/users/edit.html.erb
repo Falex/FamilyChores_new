@@ -3,8 +3,11 @@
 <%= link_to 'Go to Account', account_path %> |
 <%= link_to 'Destroy Account', @user, :confirm => 'Are you sure?', :method => :delete %>
 
-<% form_for @user, :url => account_path do |f| %>
+<% form_for @user, :html => {:multipart => true} do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'form', :object => f %>
+  <p>
+	<%= f.file_field :photo %>
+  </p>
   <%= f.submit 'Update' %>
 <% end %>

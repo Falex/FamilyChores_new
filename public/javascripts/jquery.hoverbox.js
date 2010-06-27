@@ -18,7 +18,7 @@ jQuery.fn.hoverbox = function(options) {
     function tooltip(event) {
         if ( ! handle) {
             // Create an empty div to hold the tooltip
-            handle = $('<div style="position:absolute" id="'+settings.id+'"></div>').appendTo(document.body).hide();
+            handle = $('<div style="position:absolute" "id="'+settings.id+'"></div>').appendTo(document.body).hide();
         }
 
         if (event) {

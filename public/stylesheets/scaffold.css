@@ -8,7 +8,8 @@ body {
 }
 
 #wrapper{
-background: transparent url(../images/HG.jpg)no-repeat scroll 0 0;
+background: transparent url(../images/HG.jpg);
+background-repeat:no-repeat;
 }
 
 body, p, ol, ul, td {
@@ -195,7 +196,8 @@ height:30px;
 font-family:Miriam;
 font-size: 15px;
 color:white;
-background: transparent url(../images/Kalendertageaktiv.png)no-repeat scroll 0 0;
+background: transparent url(../images/Kalendertageaktiv.png);
+background-repeat:no-repeat;
 padding-bottom:20px;
 }
 	
@@ -210,7 +212,8 @@ max-width: 82px;
 max-height: 80px;
 color: #000000;
 height: 80px;
-background: transparent url(../images/Kalenderfeld_dark.png)no-repeat scroll 0 0;
+background: transparent url(../images/Kalenderfeld_dark.png);
+background-repeat:no-repeat;
 overflow:hidden;
 }
 
@@ -220,7 +223,36 @@ float:left;
 list-style-type: none;
 }
 #nav{
-background: transparent url(../images/Stange.png)no-repeat scroll 0 0;
+background: transparent url(../images/Stange.png);
+background-repeat:no-repeat;
 position:relative;
 
+}
+
+#tooltip {
+    padding: 3px;
+    background: orange;
+    border: 1px solid #eee;
+    text-align: center;
+    font-size: 15px;
+		color:black;
+		-moz-border-radius:5px;
+}
+
+.tip {
+    border-bottom: 1px solid #eee;
+		
+}
+
+
+.day{
+font-size:20px;
+position:relative;
+left: 50px;
+top: -15px;
+}
+
+#profile_image img{
+width:77px;
+height:96px;
 }
