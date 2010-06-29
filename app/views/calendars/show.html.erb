@@ -5,18 +5,95 @@
 		
 		$("tbody").sortable({items: 'td', containment: 'table' });
 		$("td").hoverbox();
-		
-		
-	
+
 	});
 	</script>
+<% content_for(:head) do %>
+ 
+	<script type="text/javascript">
+		$(function(){
+  //Get our elements for faster access and set overlay width
+  var div = $('div.sc_menu'),
+               ul = $('ul.sc_menu'),
+               // unordered list's left margin
+               ulPadding = 15;
+							 
+	var btn_left = $('div.btn_left');
+	var btn_right = $('div.btn_right');
+	var offset = 0;
+
+  //Get menu width
+  var divWidth = div.width();
+
+  //Remove scrollbars
+  div.css({overflow: 'hidden'});
+
+  //Find last image container
+  var lastLi = ul.find('li:last-child');
+
+  //When user move mouse over menu
+  div.mousemove(function(e){
+    //As images are loaded ul width increases,
+    //so we recalculate it each time
+    var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+
+    var left = (e.pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
+    div.scrollLeft(left);
+  });
 	
+	
+	btn_left.click(function(e){
+		if (offset < divWidth + 120) {offset = offset + 50;}
+		var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+		var left = (offset - div.offset().left) * (ulWidth-divWidth) / divWidth;
+		div.scrollLeft(left);
+	});
+	
+	btn_right.click(function(e){
+	
+	offset = offset - 50;
+	var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+	var left = (offset - div.offset().left) * (ulWidth-divWidth) / divWidth;
+	div.scrollLeft(left);
+	});
+	
+});
+	</script>
+<% end %>	
 
 
-<p>
-  <i>Last Calender Update On:</i><br/>
-  <%=h @calendar.updated_at.strftime('%d.%m.%Y') %>
-</p>
+	
+	
+<div class="btn_left"> <%= image_tag('arrow_left_light.png', :id=> "btn_left", :mouseover => "arrow_left_dark.png" , :border=>0) %>
+</div>
+<div class="sc_menu">
+	<div id="members">
+		<% @id = @calendar.id %>
+		<ul class="sc_menu">
+			<% @family.each do |member|%>
+					<li>
+					<%= member.login %>
+					<% if member.photo.exists? %>
+						<a href="#"><%= image_tag(member.photo.url) %> </a>
+					<% else %>
+						<a href="#"><%= image_tag('girl.jpg') %> </a>
+					<% end %>
+					</li>
+			<% end %>
+			<% @family.each do |member|%>
+					<li>
+					<%= member.login %>
+					<% if member.photo.exists? %>
+						<a href="#"><%= image_tag(member.photo.url) %> </a>
+					<% else %>
+						<a href="#"><%= image_tag('girl.jpg') %> </a>
+					<% end %>
+					</li>
+			<% end %>
+		</ul>
+	</div>
+</div>
+<div class="btn_right"><%= image_tag('arrow_right_light.png', :id => "btn_right", :mouseover => "arrow_right_dark.png", :border =>0) %></div>
 
 <%
 =begin %>
@@ -26,8 +103,8 @@
   <% time = Time.now.beginning_of_week + x * 86400%>
   <li id="name_of_day">
     <%= time.strftime("%d") %>
-	<br />
-	<%= time.strftime("%A") %>
+		<br />
+		<%= time.strftime("%A") %>
   </li>
 
   <% unless @calendar.events.empty? %>
@@ -92,17 +169,7 @@
 
 
 <div id="details">
-<div id="members">
-<% @id = @calendar.id %>
-<h3>Members</h3>
-<ul>
-<% @family.each do |member|%>
-<li>
-<%= member.login %>
-</li>
-<% end %>
-</ul>
-</div>
+
 <div id="events">
 <h3>Events</h3>
 

@@ -6,7 +6,11 @@
 
 
 <div id="profile_image">
-	<%= image_tag @user.photo.url %>
+	<% if @user.photo.exists? %>
+		<%= image_tag(@user.photo.url) %> 
+	<% else %>
+		<%= image_tag('girl.jpg') %> 
+	<% end %>
 </div>
 
 <p>

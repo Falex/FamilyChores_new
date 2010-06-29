@@ -151,9 +151,16 @@ td a{
  		  
 }
 
-#members{
- clear:both;;
+#members img{
+ width:65px;
+ height:78px;
 }
+
+#members p{
+float:left;
+
+}
+
 
 #chores{
   clear:both;
@@ -189,6 +196,10 @@ float:left;
 clear:both;
 position:relative;
 left:40;
+}
+
+#calendar_grid {
+float:left;
 }
 	
 #name_of_day{
@@ -255,4 +266,42 @@ top: -15px;
 #profile_image img{
 width:77px;
 height:96px;
+}
+
+
+div.sc_menu {
+  /* Set it so we could calculate the offsetLeft */
+  position: relative;
+  height: 145px;
+  width: 500px;
+  /* Add scroll-bars */
+  overflow: auto;
+}
+ul.sc_menu {
+  display: block;
+  height: 110px;
+  /* Max width here, for users without Javascript */
+  width: 1500px;
+  padding: 15px 0 0 15px;
+  /* Remove default margin */
+  margin: 0;
+  background: url('navigation.png');
+  list-style: none;
+}
+.sc_menu li {
+  display: block;
+  float: left;
+  padding: 0 4px;
+}
+.sc_menu a {
+  display: block;
+  text-decoration: none;
+}
+.sc_menu span {
+  /* We want a caption to display on the next line */
+  display: block;
+  margin-top: 3px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
 }
