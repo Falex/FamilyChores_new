@@ -9,5 +9,11 @@
   <p>
 	<%= f.file_field :photo %>
   </p>
+  
+  <p>
+    <%= f.label :color %><br/>
+    <%= f.select 'color', options_for_select(@colors)%>
+  </p>
+
   <%= f.submit 'Update' %>
 <% end %>

@@ -2,6 +2,7 @@ authorization do
 	role :child do
 	  has_permission_on :calendars, :to => [:index, :show]
 	  has_permission_on :events, :to => [:index, :show, :new, :create]
+	  has_permission_on :rankings, :to => [:index]
 	  has_permission_on :events, :to => [:edit, :update, :destroy] do
 	    if_attribute :user => is {user}
 	  end

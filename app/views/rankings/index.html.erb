@@ -1,0 +1,41 @@
+<% content_for(:body) do %>
+
+<h1>Ranking</h1>
+
+<div id="ranking">
+	<% place = 1 %>
+	<% @rankings.each do |member| %>
+		<div id="member">
+			<h3><%=h member.login %></h3>
+			<% if !member.stars_count.nil? %>
+				<p><%=h member.stars_count %></p>
+				<p><%=h member.entire_stars_count %></p>
+			<% end %>
+			<% frame = "<div class = '#{member.color}'>"%>
+			<%= frame %>
+				<% if member.photo.exists? %>
+					<%= image_tag(member.photo.url) %> 
+				<% else %>
+					<%= image_tag('girl.jpg') %> 
+				<% end %>
+			</div>
+			<div class="award">
+				<h2><%= place %></h2>
+				<% if place < 4 %>
+					<%= image_tag("../images/Ranking/#{place}Platz.png") %>
+				<% else %>
+					<%= image_tag("../images/Ranking/Abvier.png") %>
+				<% end %>
+			</div>
+			<% place = place + 1 %>
+		</div>
+	<% end %>
+</div>
+
+<div class="pillar">
+nlnlnlönl nlknöln lknölnölkn nlnölnl önölnlknöl nlönölnlökn
+</div>
+<% end %>
+
+
+

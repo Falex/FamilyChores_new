@@ -15,14 +15,14 @@
 <div id="wrapper">
   
   <p id="notice" ><%= flash[:notice] %></p>
-  <%= link_to 'Home', calendars_path %> |
+  <%= link_to 'Home', calendars_path %> 
   
   
     
   
   
   <% if current_user %>
-	<div id="nav">
+	<div class="nav">
 		<ul>
 			<li id="verwaltung">
 				<%-# if @current_user.roles == "admin" -%>
@@ -36,10 +36,13 @@
 				<%= link_to 'Logout', :controller =>  'user_sessions', :action => 'logout' %> 
 			</li>
 			<li>
-				<%= link_to image_tag("Ranking_light.png", :mouseover => "Ranking_dark.png", :border=>0), :controller =>'user_sessions', :action =>'logout' %>
+				<%= link_to image_tag("Ranking_light.png", :mouseover => "Ranking_dark.png", :border=>0), :controller =>'rankings', :action =>'index' %>
 			</li>
 			<li>
 				<%= link_to image_tag("Kalender_light.png", :mouseover => "Kalender_dark.png", :border=>0), :controller =>'calendars', :action =>'index' %>
+			</li>
+			<li>
+				<%= yield(:nav) %>
 			</li>
 			<%= @message %>
 		</ul>
@@ -50,8 +53,9 @@
   <% end %>
   
   <%= yield %>
+	<%= yield(:body) %>
   
-  <p id="footer">&copy;2010 by Alexandra F.</p>
+  <p id="footer">&copy;2010 by Alexandra F. & Natascha H.</p>
 </div>
 </body>
 </html>

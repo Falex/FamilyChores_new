@@ -30,9 +30,9 @@ class ConfigurationsController < ApplicationController
     @user = @current_user
   end
   
-   def authenticate
-	unless current_user
-	  redirect_to account_url
-	end
+  def authenticate
+		unless current_user
+			redirect_to account_url
+		end
   end
 end

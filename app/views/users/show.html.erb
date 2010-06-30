@@ -2,15 +2,18 @@
 
 <p><%= link_to 'Edit Account', [:edit, @user] %></p>
 
-<!-- <img src="<%=h gravatar_url @user.email %>" alt="account picture" /> -->
+
 
 
 <div id="profile_image">
-	<% if @user.photo.exists? %>
-		<%= image_tag(@user.photo.url) %> 
-	<% else %>
-		<%= image_tag('girl.jpg') %> 
-	<% end %>
+	<% frame = "<div class = '#{@user.color}'>"%>
+		<%= frame %>
+		<% if @user.photo.exists? %>
+			<%= image_tag(@user.photo.url) %> 
+		<% else %>
+			<%= image_tag('girl.jpg') %> 
+		<% end %>
+	<div>
 </div>
 
 <p>

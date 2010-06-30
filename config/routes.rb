@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :chores
   map.resources :rewards
   map.resources :icalfiles
+	map.resources :calendars, :has_many => :rankings
   
   
   
@@ -21,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account, :controller => 'users'
   map.resources :users
   map.resource :user_session
+	
+	#map.resource :addStar, :controller => 'users'
   
  
 

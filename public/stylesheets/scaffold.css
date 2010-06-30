@@ -4,7 +4,7 @@ body {
   margin-left:auto;
   margin-right:auto;
   width: 1000px;
-  color: white; 
+  color: black; 
 }
 
 #wrapper{
@@ -32,8 +32,6 @@ color:black;
 
 h2 {
 
-margin-bottom: 20px;
-border-bottom: 3px dotted #800000;
 padding:5px;
 }
 
@@ -49,7 +47,7 @@ color: #800000;
 }
 
 a:hover { 
-color: #fff; background-color:#CC3300; 
+color: #fff; 
 }
 
 div label {
@@ -140,7 +138,7 @@ font-size:11px;
 }
 
 #notice {
-color: orange;
+color: black;
 }
 
 td a{
@@ -152,8 +150,11 @@ td a{
 }
 
 #members img{
- width:65px;
- height:78px;
+ margin-top:7px;
+ margin-left:7px;
+ width:56px;
+ height:75px;
+ border:none;
 }
 
 #members p{
@@ -229,14 +230,19 @@ overflow:hidden;
 }
 
 
-#nav ul{
-float:left;
+.nav ul{
+/*float:left;*/
 list-style-type: none;
+text-align:right;
 }
-#nav{
-background: transparent url(../images/Stange.png);
+
+.nav{
+height:600px;
+width: 200px;
+background: url(../images/Buttons/Pfeiler.png);
 background-repeat:no-repeat;
-position:relative;
+background-position:right;
+
 
 }
 
@@ -279,13 +285,12 @@ div.sc_menu {
 }
 ul.sc_menu {
   display: block;
-  height: 110px;
+  height: 120px;
   /* Max width here, for users without Javascript */
   width: 1500px;
   padding: 15px 0 0 15px;
   /* Remove default margin */
   margin: 0;
-  background: url('navigation.png');
   list-style: none;
 }
 .sc_menu li {
@@ -305,3 +310,185 @@ ul.sc_menu {
   font-size: 12px;
   color: #fff;
 }
+
+div.trigger {
+	
+}
+div.trigger a {
+	
+	text-decoration: none;
+	
+}
+div.trigger a:hover { color: #ccc; }
+div.active {background-position: left bottom;} /*--When toggle is triggered, it will shift the image to the bottom to show its "opened" state--*/
+.toggle_container {
+	margin: 0 0 5px;
+	padding: 0;
+	background: url(../images/Buttons/aufgaben_aktiv.png);
+	background-repeat:no-repeat;
+	overflow: hidden;
+	font-size: 1.2em;
+	width: 200px;
+	clear: both;
+	height:500px;
+}
+.toggle_container .block {
+	padding: 20px; /*--Padding of Container--*/
+	width:100px;
+	height: 100px;
+	margin-left:40px;
+	margin-top:70px;
+	margin-bottom:50px;
+	overflow:auto;
+	 /*--Bottom rounded corners--*/
+}
+
+.rating{
+margin: 0 0 5px;
+	padding: 0;
+	background: url(../images/Kalender/Kalenderfeld_lang.png);
+	background-repeat:no-repeat;
+	overflow: hidden;
+	font-size: 1.2em;
+	width: 200px;
+	clear: both;
+}
+
+.sc_menu div{
+	background-repeat:no-repeat;
+	width: 75px;
+	height: 90px;
+}
+
+div.pink{
+  background: url(../images/Kalender/Personen_Rahmen_pink.png);
+	background-repeat:no-repeat;
+}
+
+
+div.blue{
+	background: url(../images/Kalender/Personen_Rahmen_blau.png);
+	background-repeat:no-repeat;
+}
+
+div.green{
+	background: url(../images/Kalender/Personen_Rahmen_limette.png);
+	background-repeat:no-repeat;
+}
+
+div.red{
+	background: url(../images/Kalender/Personen_Rahmen_rot.png);
+	background-repeat:no-repeat;
+}
+
+#ranking #member img{
+	width:71px;
+	height:93px;
+	background-repeat:no-repeat;
+	margin-top:35px;
+	margin-left:17px;
+}
+
+#ranking{
+
+}
+
+#ranking #member{
+	width:200px;
+	height:200px;
+	
+}
+
+#ranking div.pink{
+	background: url(../images/Ranking/Rahmen_Klupperl_pink.png);
+	width:101px;
+	height:143px;
+}
+
+#ranking div.blue{
+	background: url(../images/Ranking/Rahmen_Klupperl_blau.png);
+	width:101px;
+	height:143px;
+}
+
+#ranking div.green{
+	background: url(../images/Ranking/Rahmen_Klupperl_limette.png);
+	width:101px;
+	height:143px;
+}
+
+#ranking div.red{
+	background: url(../images/Ranking/Rahmen_Klupperl_rot.png);
+	width:101px;
+	height:143px;
+}
+
+.award img{
+width:46px;
+height:100px;
+}
+
+.award{
+position:relative;
+top:-140px;
+left:30px;
+
+}
+
+.award h2{
+position:relative;
+top:+100px;
+color:#000000;
+left:40px;
+}
+
+
+.pillar{
+height:600px;
+width:20px;
+position:absolute;
+float:right;
+right:20px;
+
+background: url(../images/Buttons/Pfeiler.png);
+}
+
+#profile_image div{
+background-repeat:no-repeat;
+}
+
+#profile_image img{
+width:115px;
+height:155px;
+margin-top:10px;
+margin-left:10px;
+}
+
+#user_configurations img{
+	width:71px;
+	height:93px;
+}
+
+
+#profile_image div.pink{
+  background: url(../images/Profil/Rahmen_Profil_pink.png);
+	background-repeat:no-repeat;
+}
+
+
+#profile_image  div.blue{
+	background: url(../images/Profil/Rahmen_Profil_blau.png);
+	background-repeat:no-repeat;
+}
+
+#profile_image  div.green{
+	background: url(../images/Profil/Rahmen_Profil_limette.png);
+	background-repeat:no-repeat;
+}
+
+#profile_image  div.red{
+	background: url(../images/Profil/Rahmen_Profil_rot.png);
+	background-repeat:no-repeat;
+}
+
+

@@ -2,23 +2,30 @@
  
 <% @users.each do |u| %>
    <% @user2 = u %>
-   <p>
-   <%= u.login %>
-   </p>
-   <p>
-   <img src="<%=h gravatar_url u.email %>" alt="account picture" />
-   </p>
-   
-   <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>
-   <% form_for(@user2)  do |f| %>
-     <%= f.error_messages %>
-	 
-	  Child <%= f.radio_button :roles, 'child', :checked => true %> <br />
-      Parent <%= f.radio_button :roles, 'parent' %> <br />
-     
-     <%= f.submit 'Update' %>
-   <% end %>
-
+	 <div id= "user_configurations">
+		 <p>
+		 <%= u.login %>
+		 </p>
+		
+			<% frame = "<div class = '#{u.color}'>"%>
+			<%= frame %>
+				<% if u.photo.exists? %>
+					<a href="#"><%= image_tag(u.photo.url) %> </a>
+				<% else %>
+					<a href="#"><%= image_tag('girl.jpg') %> </a>
+				<% end %>
+			</div>
+		 
+		 <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>
+		 <% form_for(@user2)  do |f| %>
+			 <%= f.error_messages %>
+		 
+			Child <%= f.radio_button :roles, 'child', :checked => true %> <br />
+				Parent <%= f.radio_button :roles, 'parent' %> <br />
+			 
+			 <%= f.submit 'Update' %>
+		 <% end %>
+	 </div>
 <% end %>
 
 

@@ -7,10 +7,39 @@
 		$("td").hoverbox();
 
 	});
+	
+	$(document).ready(function() {
+    $("#accordion").accordion();
+  });
+
 	</script>
+	
 <% content_for(:head) do %>
+<%= javascript_include_tag 'jquery.em', 'jquery.onImagesLoad', 'jquery.mousewheel', 'jScrollPlane' %>
+
  
 	<script type="text/javascript">
+	
+	$(document).ready(function(){
+
+	//Hide (Collapse) the toggle containers on load
+	$(".toggle_container").hide(); 
+	$(".rating").hide();
+
+	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+	$("div.trigger").click(function(){
+		$(this).toggleClass("active").next().slideToggle("slow");
+	});
+	
+	$("div.calendar_entry").click(function(){
+		$(this).toggleClass("active").next().slideToggle("slow");
+	});
+
+
+});
+
+
+	
 		$(function(){
   //Get our elements for faster access and set overlay width
   var div = $('div.sc_menu'),
@@ -59,9 +88,21 @@
 	
 });
 	</script>
-<% end %>	
+<% end %>
+
+<% content_for(:nav) do %>
+<div class = "trigger"><%= image_tag('Aufgaben_light.png') %> </div>
+<div class="toggle_container">
+	<div class = "block">
+			<% @calendar.chores.each do |chore| %>
+				<%= image_tag(chore.image_url) %>
+				<%= chore.title %>
+			<% end %>
+	</div>
+</div>
 
 
+<% end %>
 	
 	
 <div class="btn_left"> <%= image_tag('arrow_left_light.png', :id=> "btn_left", :mouseover => "arrow_left_dark.png" , :border=>0) %>
@@ -71,25 +112,32 @@
 		<% @id = @calendar.id %>
 		<ul class="sc_menu">
 			<% @family.each do |member|%>
-					<li>
-					<%= member.login %>
-					<% if member.photo.exists? %>
-						<a href="#"><%= image_tag(member.photo.url) %> </a>
-					<% else %>
-						<a href="#"><%= image_tag('girl.jpg') %> </a>
-					<% end %>
+			    <li>
+						<%= member.login %>
+						<% frame = "<div class = '#{member.color}'>"%>
+						<%= frame %>
+							<% if member.photo.exists? %>
+								<a href="#"><%= image_tag(member.photo.url) %> </a>
+							<% else %>
+								<a href="#"><%= image_tag('girl.jpg') %> </a>
+							<% end %>
+						</div>
 					</li>
 			<% end %>
 			<% @family.each do |member|%>
-					<li>
-					<%= member.login %>
-					<% if member.photo.exists? %>
-						<a href="#"><%= image_tag(member.photo.url) %> </a>
-					<% else %>
-						<a href="#"><%= image_tag('girl.jpg') %> </a>
-					<% end %>
+			    <li>
+						<%= member.login %>
+						<% frame = "<div class = '#{member.color}'>"%>
+						<%= frame %>
+							<% if member.photo.exists? %>
+								<a href="#"><%= image_tag(member.photo.url) %> </a>
+							<% else %>
+								<a href="#"><%= image_tag('girl.jpg') %> </a>
+							<% end %>
+						</div>
 					</li>
 			<% end %>
+			
 		</ul>
 	</div>
 </div>
@@ -144,19 +192,33 @@
 	      <td>
 			 <% z=0 %>
 				<% @entries.each do |event| %>
-					<% if event.start_on.day == time.day && !usedAlready.has_key?(z)%>
-					  <!--[if IE]>
-						<%= @spantitle = "<span title='#{event.description}'>" %>
-						<![endif]-->
-						<![if !IE]>
-						<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
-						<![endif]>
-							<%= image_tag(event.chore.image_url) %> 
-							<% usedAlready[z] = true %>
-							<% break %>
-						</span>
-					<% end %>
-					<% z= z+1 %>
+					<div class= "calendar_entry">
+						<% if event.start_on.day == time.day && !usedAlready.has_key?(z)%>
+							<!--[if IE]>
+							<%= @spantitle = "<span title='#{event.description}'>" %>
+							<![endif]-->
+							<![if !IE]>
+							<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
+							<![endif]>
+								<% frame = "<div class = '#{event.user.color}'>"%>
+								<%= frame %>
+									<%= image_tag(event.chore.image_url) %> 
+								</div>
+					</div>
+								<div class="rating">
+									<div class="block">
+										<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users" %>
+										<%= link_to_remote( image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :controller => "users",  :action => 'addStar', :id => event.user.id) %>
+										
+										
+									</div>
+								</div>
+								<% usedAlready[z] = true %>
+								<% break %>
+							</span>
+						<% end %>
+						<% z= z+1 %>
+					
 				<% end %>
 		  </td>
 	
