@@ -5,7 +5,11 @@ class ConfigurationsController < ApplicationController
 
   def index
     @users = User.find(:all, :conditions => ["fam_id=?", @user.fam_id])
-	
+	  @calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		@rewards = Reward.all(:conditions => ["calendar_id=?", @calendar_id])
+		@events = Event.all(:conditions => ["calendar_id=?", @calendar_id])
+		@chores = Chore.all(:conditions => ["calendar_id=?", @calendar_id])
+		
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @configurations }

@@ -20,21 +20,50 @@
  
 	<script type="text/javascript">
 	
+
+
+	
 	$(document).ready(function(){
 
 	//Hide (Collapse) the toggle containers on load
 	$(".toggle_container").hide(); 
 	$(".rating").hide();
+	$(".chores").hide();
+	$(".events").hide();
+	
+	
+	
 
 	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
 	$("div.trigger").click(function(){
 		$(this).toggleClass("active").next().slideToggle("slow");
+		
 	});
 	
 	$("div.calendar_entry").click(function(){
 		$(this).toggleClass("active").next().slideToggle("slow");
 	});
 
+	$("div.checkbox").click(function(event){
+	
+		var color = $(this).children('p').html();
+		var help = ".calendar_entry ." + color;
+		$(help).toggle(400);
+		$(this).children('div').children('img').toggle();
+		
+		return false;
+	}); 
+	
+	$("div.upload").click(function(event){
+		$('.chores').toggle(200);
+	});
+	
+	$("div.newEvent").click(function(event){
+		$('.events').toggle(200);
+	});
+	
+	
+	<!--$(color).toggle(400);return false;}); -->
 
 });
 
@@ -93,6 +122,8 @@
 <% content_for(:nav) do %>
 <div class = "trigger"><%= image_tag('Aufgaben_light.png') %> </div>
 <div class="toggle_container">
+	<div class="upload"><%= image_tag('../images/Buttons/Uploadicon.png') %></div>
+	<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png') %></div>
 	<div class = "block">
 			<% @calendar.chores.each do |chore| %>
 				<%= image_tag(chore.image_url) %>
@@ -105,7 +136,7 @@
 <% end %>
 	
 	
-<div class="btn_left"> <%= image_tag('arrow_left_light.png', :id=> "btn_left", :mouseover => "arrow_left_dark.png" , :border=>0) %>
+<div class="btn_left"> 
 </div>
 <div class="sc_menu">
 	<div id="members">
@@ -121,6 +152,12 @@
 							<% else %>
 								<a href="#"><%= image_tag('girl.jpg') %> </a>
 							<% end %>
+						</div>
+						<div class = "checkbox"> 
+							<div>
+							<%= image_tag('../images/Kalender/hackerl_on.png') %>
+							</div>
+							<p><%= member.color %></p>
 						</div>
 					</li>
 			<% end %>
@@ -141,37 +178,25 @@
 		</ul>
 	</div>
 </div>
-<div class="btn_right"><%= image_tag('arrow_right_light.png', :id => "btn_right", :mouseover => "arrow_right_dark.png", :border =>0) %></div>
-
-<%
-=begin %>
-<div id="calendar_grid">
-<% 7.times  do |x|%>
-<ul id ="calendar_entries">
-  <% time = Time.now.beginning_of_week + x * 86400%>
-  <li id="name_of_day">
-    <%= time.strftime("%d") %>
-		<br />
-		<%= time.strftime("%A") %>
-  </li>
-
-  <% unless @calendar.events.empty? %>
-    <% @calendar.events.each do |event| %>
-      <% if event.start_on.day == time.day %>
-		<li id=time.day>
-		   <%=h event.description %><br/>
-		   <%=h event.user.login %>
-		   <%= image_tag(event.chore.image_url) %> 
+<div class="btn_right"></div>
+<ul>
+	<div class="chores">
+		<li>
+			<% if permitted_to? :create, @chore %>
+				<h3>Create Chores</h3>
+				<%= render :partial => @chore = Chore.new, :locals => { :button_name => 'Create'} %>
+			<% end %>
 		</li>
-	  <% end %>
-    <% end %>
-  <% end %>  
-</ul>
-<% end %>
-</div>
-<%
-=end %>
-
+	</div>
+	<div class="events">
+		<li>
+			<% if !@calendar.chores.empty? %>
+				<h3>Create new event</h3>
+				<%= render :partial => @event = Event.new, :locals => { :button_name => 'Create'}%>
+			<% end %>
+		</li>
+	</div>
+<ul>
 <div id= "calendar_grid">
 <table>
 <tr id ="calendar_entries">
@@ -207,10 +232,9 @@
 					</div>
 								<div class="rating">
 									<div class="block">
-										<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users" %>
-										<%= link_to_remote( image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :controller => "users",  :action => 'addStar', :id => event.user.id) %>
-										
-										
+										<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users" %>
+										<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users" %>
+								
 									</div>
 								</div>
 								<% usedAlready[z] = true %>
@@ -230,40 +254,30 @@
 </div>
 
 
+
+
 <div id="details">
+	<div id="events">
+		<h3>Events</h3>
+		<% unless @calendar.events.empty? %>
+			<% @calendar.events.each do |event| %>
+				<p>
+				<%=h event.description %><br/>
+					<%=h event.start_on.strftime('%d.%m.%Y') %>
+			</p>
+			<p>
+				<%= link_to 'Show Event', [@calendar, event] %> |
+				<% if permitted_to? :edit, @event %>
+					<%= link_to 'Edit Event', [:edit, @calendar, event] %> |
+				<% end %>
+				<% if permitted_to? :destroy, @event %>
+					<%= link_to 'Destroy Event', [@calendar, event], :confirm => 'Are you sure?', :method => :delete %>
+				<% end %>
 
-<div id="events">
-<h3>Events</h3>
-
-<% unless @calendar.events.empty? %>
-  <% @calendar.events.each do |event| %>
-    <p>
-	  <%=h event.description %><br/>
-      <%=h event.start_on.strftime('%d.%m.%Y') %>
-	</p>
-	<p>
-	  <%= link_to 'Show Event', [@calendar, event] %> |
-	  <% if permitted_to? :edit, @event %>
-	    <%= link_to 'Edit Event', [:edit, @calendar, event] %> |
-	  <% end %>
-	  <% if permitted_to? :destroy, @event %>
-	    <%= link_to 'Destroy Event', [@calendar, event], :confirm => 'Are you sure?', :method => :delete %>
-	  <% end %>
-
-	</p><br/>
-  <% end %>
-<% end %>
-</div>
-<div id="chores">
-<% if permitted_to? :create, @chore %>
-  <h3>Create Chores</h3>
-  <%= render :partial => @chore = Chore.new, :locals => { :button_name => 'Create'} %>
-<% end %>
-<% if !@calendar.chores.empty? %>
-<h3>Create new event</h3>
-<%= render :partial => @event = Event.new, :locals => { :button_name => 'Create'}%>
-<% end %>
-</div>
-<h3>Create Rewards</h3>
-<%= render :partial => @reward = Reward.new, :locals => { :button_name => 'Create'}%>
+			</p><br/>
+			<% end %>
+		<% end %>
+	</div>
+	<h3>Create Rewards</h3>
+	<%= render :partial => @reward = Reward.new, :locals => { :button_name => 'Create'}%>
 </div>

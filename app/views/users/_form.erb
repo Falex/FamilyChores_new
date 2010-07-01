@@ -20,6 +20,10 @@
   <%= form.text_field :family %>
 </p>
 <p>
+  <%= form.select(:female ,{"weiblich" => true, "mannlich" => false }) %>
+  <p>
+</p>
+<p>
   <%= form.label :family_password, form.object.new_record? ? nil : 'Change password' %><br />
   <%= form.password_field :family_password %>
 </p>

@@ -4,6 +4,15 @@
 <% for chore in @chores %>
   <h3><%=h chore.title %></h3>
   <p><%=h chore.image_url %></p>
+	<p>
+		<%= image_tag(chore.image_url) %> 
+	</p>
+	<% if chore.image.exists? %>
+		<p>
+			<b>Image:</b>
+			<%= image_tag(chore.image.url) %> 
+		</p>
+	<% end %>
   <p>
     <%= link_to 'Show', [@calendar, chore] %> |
     <%= link_to 'Edit', [:edit, @calendar, chore] %> |

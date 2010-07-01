@@ -1,36 +1,105 @@
-<h1> Configurations Page</h1>
- 
-<% @users.each do |u| %>
-   <% @user2 = u %>
-	 <div id= "user_configurations">
-		 <p>
-		 <%= u.login %>
-		 </p>
-		
-			<% frame = "<div class = '#{u.color}'>"%>
-			<%= frame %>
-				<% if u.photo.exists? %>
-					<a href="#"><%= image_tag(u.photo.url) %> </a>
-				<% else %>
-					<a href="#"><%= image_tag('girl.jpg') %> </a>
-				<% end %>
-			</div>
-		 
-		 <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>
-		 <% form_for(@user2)  do |f| %>
-			 <%= f.error_messages %>
-		 
-			Child <%= f.radio_button :roles, 'child', :checked => true %> <br />
-				Parent <%= f.radio_button :roles, 'parent' %> <br />
-			 
-			 <%= f.submit 'Update' %>
-		 <% end %>
-	 </div>
+<% content_for(:head) do %>
+	<script type="text/javascript">
+	$(document).ready(function(){
+			$('.user_configurations').hide();
+			$('.events_conf').hide();
+			$('.chores_conf').hide();
+			$('.rewards_conf').hide();
+			
+			$("h3.user").click(function(event){
+			$('.user_configurations').toggle(200);
+			});
+			
+			$("h3.reward").click(function(event){
+			$('.rewards_conf').toggle(200);
+			});
+			
+			$("h3.event").click(function(event){
+			$('.events_conf').toggle(200);
+			});
+			
+			$("h3.chore").click(function(event){
+			$('.chores_conf').toggle(200);
+			});
+	});
+	</script>
 <% end %>
 
 
+<div class="configuration_page"> 
+<h1> Configurations Page</h1>
+	<h3 class = "user" >Bentuzer</h3> 
+	<h3 class = "reward">Belohnungen</h3>
+	<h3 class = "event">Aufgaben</h3>
+	<h3 class = "chore">Aufgabentypen</h3>
+</div>
+	
+<div class="configurations">	 
+	<div class= "user_configurations"> 
+		<% @users.each do |u| %>
+			 <% @user2 = u %>
+			 
+				 <p>
+				 <%= u.login %>
+				 </p>
+				
+					<% frame = "<div class = '#{u.color}'>"%>
+					<%= frame %>
+						<% if u.photo.exists? %>
+							<a href="#"><%= image_tag(u.photo.url) %> </a>
+						<% else %>
+							<a href="#"><%= image_tag('girl.jpg') %> </a>
+						<% end %>
+					</div>
+				 
+				 <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>
+				 <% form_for(@user2)  do |f| %>
+					 <%= f.error_messages %>
+				 
+					Child <%= f.radio_button :roles, 'child', :checked => true %> <br />
+						Parent <%= f.radio_button :roles, 'parent' %> <br />
+					 
+					 <%= f.submit 'Update' %>
+				 <% end %>
+		<% end %>
+	 </div>
+	 
+	 <div class = "rewards_conf">
+	  <% if !@rewards.empty? %>
+		  <% @rewards.each do |r| %>
+				<%=h r.title %>
+				<%=h r.points %>
+		  <% end %>
+	  <% end %>
+		</div>
+	
+	<% if @events.empty? %>
+		<%= render :partial => 'events/show' %>
+	<% end %> 
+	
+		<div class = "events_conf">
+	  <% if !@events.empty? %>
+		  <% @events.each do |e| %>
+				<%=h e.description %>
+				<%= image_tag (e.chore.image.url) %>
+		  <% end %>
+	  <% end %>
+		</div>
+		
+		<div class = "chores_conf">
+			<% if !@chores.empty? %>
+				 <% @chores.each do |c| %>
+					<%= c.title %>
+					<%= image_tag (c.image_url) %>
+					<%= image_tag (c.image.url) %>
+				 <% end %>
+			<% end %>
+		</div>
+	
+	
+	 
+</div>
 
-=begin 
-   
-=end
+
+
 

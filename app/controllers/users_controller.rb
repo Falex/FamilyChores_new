@@ -117,18 +117,33 @@ class UsersController < ApplicationController
 	  else
 		  new_count = @user.entire_stars_count + 1
 	  end
-	
-		puts new_count
 
 	  if @user.update_attributes(:entire_stars_count => new_count)
 			flash[:notice] = "Added star"
 	  end
 		
-		redirect_to calendar_url
+		calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		
+		redirect_to calendar_url(:id => calendar_id)
+
 	end
 	
 	def addCloud
-	
+		@user = User.find(params[:id])
+		flash[:notice] = "in here"
+	  if @user.clouds.nil?
+		  new_count = 1;
+	  else
+		  new_count = @user.clouds + 1
+	  end
+
+	  if @user.update_attributes(:clouds => new_count)
+			flash[:notice] = "Added cloud"
+	  end
+		
+		calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		
+		redirect_to calendar_url(:id => calendar_id)
 	end
   
 

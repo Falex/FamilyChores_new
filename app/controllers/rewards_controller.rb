@@ -1,11 +1,13 @@
 class RewardsController < ApplicationController
-  before_filter :load_calendar
+  before_filter :load_user
   # GET /rewards
   # GET /rewards.xml
   def index
     #calendar = Calendar.find(params[:calendar_id])
-    @rewards = Reward.all
-	#@rewards = @calendar.rewards.find(params[:id])
+    #@rewards = Reward.all
+		#@rewards = @calendar.rewards.find(params[:id])
+		@calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		@rewards = Reward.all(:conditions => ["calendar_id=?", @calendar_id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -94,7 +96,7 @@ class RewardsController < ApplicationController
   end
   
   def load_calendar
-    @calendar = Calendar.find(params[:calendar_id])
+   # @calendar = Calendar.find(params[:calendar_id])
   end
   
   def load_user

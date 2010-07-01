@@ -1,6 +1,13 @@
 class Chore < ActiveRecord::Base
   belongs_to :calendar
   belongs_to :user
+	
+	has_attached_file :image
+	
+	validates_attachment_presence :image
+	validates_attachment_size :image, :less_than => 200.kilobytes
+	validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
+									
   
   validates_presence_of :title
   validates_presence_of :image_url

@@ -13,6 +13,11 @@
   <%= image_tag(@chore.image_url) %> 
 </p>
 
+<p>
+  <b>Image:</b>
+  <%= image_tag(@chore.image.url) %> 
+</p>
+
 
 <%= link_to 'Edit', [:edit, @calendar, @chore] %> |
 <%= link_to 'Back', calendars_path(@calendar) %>
