@@ -1,58 +1,67 @@
 <h2>Your Account</h2>
 
-<p><%= link_to 'Edit Account', [:edit, @user] %></p>
-
-
-
-
 <div id="profile_image">
 	<% frame = "<div class = '#{@user.color}'>"%>
 		<%= frame %>
 		<% if @user.photo.exists? %>
 			<%= image_tag(@user.photo.url) %> 
 		<% else %>
-			<%= image_tag('girl.jpg') %> 
+			<%= image_tag(@picture) %> 
 		<% end %>
 	<div>
 </div>
+	
+<div class="profile_data">
+	<p>
+	  Name:
+	  <b><%=h @user.login %></b>
+	</p>
 
-<p>
-  Name:<br/>
-  <b><%=h @user.login %></b>
-</p>
+	<p>
+	  Email:
+	  <b><%=h @user.email %></b>
+	</p>
 
-<p>
-  Email:<br/>
-  <b><%=h @user.email %></b>
-</p>
+	<p>
+	  Color:
+	  <b><%=h @user.color %></b>
+	</p>
 
-<p>
-  Color:<br/>
-  <b><%=h @user.color %></b>
-</p>
+	<p>
+	  Role:
+	  <b><%=h @user.roles %></b>
+	</p>
+</div>
 
-<p>
-  Role:<br/>
-  <b><%=h @user.roles %></b>
-</p>
+<div class="stars_count">
+	
+	Stars Count:
+	<% if !@present.nil? %>
+		<p>
+			<%=h @present.title %>
+		</p>
+		<p>
+			<%= @stars_to_present %>/<%= @present.points %> 
+		</p>
+	<% end %>
+</div> 
 
-<p>
-  Stars Count:<br/>
-  <b><%=h @user.stars_count %></b>
-</p>
+<div class="stars_clouds">
+	  <div class="entire_stars_count">
+			<%= @user.entire_stars_count %>
+		</div>
+		<div class="clouds">
+			<%= @user.clouds %>
+		</div>
+</div>
+<div class="present"><%= image_tag('../images/Profil/Belohnung_big.png') %> </div>
 
-<p>
-  Entire Stars Count:<br/>
-  <b><%=h @user.entire_stars_count %></b>
-</p>
- 
-<p>
-  Last login on:<br/>
-  <b>
-    <% if @user.last_login_at.nil? %>
-	  Welcome to your first visit! 
-    <% else %>
-	  <%=h @user.last_login_at.strftime('%d.%m.%Y') %>
-    <% end %>
-  </b>
-</p>
+<div class="kitty"><%= image_tag('../images/Profil/Kitty.png') %></div>
+
+<div class="points">
+	<%= image_tag('../images/Profil/Stern_klein.png') %>
+	<%= image_tag('../images/Profil/Wolke_klein.png') %>
+</div>
+
+<p class="edit_account"><%= link_to 'Edit Account', [:edit, @user] %></p>
+

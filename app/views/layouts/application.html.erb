@@ -13,15 +13,17 @@
 </head> 
 <body>
   <% if current_user %>
-	
-	<%= link_to 'Logout', :controller =>  'user_sessions', :action => 'logout' %> 
-	
+		<% content_for(:body) do %>
+			<div class="logout">
+					<%= link_to 'Logout', :controller =>  'user_sessions', :action => 'logout' %>
+			</div>
+		<% end %>
 	<div class="nav">
 		<ul>
 			<li id="verwaltung">
-				<%-# if @current_user.roles == "admin" -%>
+				<% if @current_user.roles == "admin" %>
 					<%= link_to image_tag("Verwaltung_light.png", :mouseover => "Verwaltung_dark.png" ,:border=>0), :controller => 'configurations', :action => 'index' %> 
-				<%-# end -%>
+				<% end %>
 			</li>
 			<li>
 				<%= link_to image_tag("Profilgirl_light.png", :clicked => "Profilgirl_dark.png", :mouseover =>"Profilgirl_dark.png", :border=>0), account_path %> 
@@ -38,19 +40,26 @@
 			<%= @message %>
 		</ul>
 	</div>
+	<div id="wrapper">
+		<p id="notice" ><%= flash[:notice] %></p>
+		<%= yield %>
+		<%= yield(:body) %>  
+	</div>
   <% else %>
-    <%= link_to 'Login', :controller =>  'user_sessions', :action => 'new' %> | 
-		<%= link_to 'Sign up', :controller =>  'users', :action => 'new' %>
+		<div id="wrapper" %>
+			<div class="register">
+					<%= link_to 'Login', :controller =>  'user_sessions', :action => 'new' %> | 
+					<%= link_to 'Sign up', :controller =>  'users', :action => 'new' %>
+				</div>
+				<%= yield(:login) %>
+				<div class="maskottchen">
+					<%= image_tag('Maskottchen.png') %>
+				</div>
+			</div>
+		</div>
   <% end %>
-<div id="wrapper">
-  
-  <p id="notice" ><%= flash[:notice] %></p>
-  <%= link_to 'Home', calendars_path %> 
+	
 
-  <%= yield %>
-	<%= yield(:body) %> 
-   
-</div>
 
 <!--<div class="footer">&copy;2010 by Alexandra F. & Natascha H.</div>-->
 </body>

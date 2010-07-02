@@ -9,6 +9,7 @@ class ConfigurationsController < ApplicationController
 		@rewards = Reward.all(:conditions => ["calendar_id=?", @calendar_id])
 		@events = Event.all(:conditions => ["calendar_id=?", @calendar_id])
 		@chores = Chore.all(:conditions => ["calendar_id=?", @calendar_id])
+
 		
     respond_to do |format|
       format.html # index.html.erb

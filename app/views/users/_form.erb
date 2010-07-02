@@ -21,10 +21,10 @@
 </p>
 <p>
   <%= form.select(:female ,{"weiblich" => true, "mannlich" => false }) %>
-  <p>
-</p>
+</p>  
+
 <p>
-  <%= form.label :family_password, form.object.new_record? ? nil : 'Change password' %><br />
+  <%= form.label :family_password, form.object.new_record? ? nil : 'Change Family Password' %><br />
   <%= form.password_field :family_password %>
 </p>
 

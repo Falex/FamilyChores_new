@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 	
 	@user = User.new(params[:user])
 	#@family = Family.find(:all, :conditions => ["title=?", @user.family])
-	@family = Fam.find(:all, :conditions => ["title=?", @user.family])
+	@family = Fam.first(:conditions => ["title=?", @user.family])
 	
 	if @family.empty?
 	   #@family = Family.new(:title => @user.family)
@@ -26,17 +26,17 @@ class UsersController < ApplicationController
 	   @user.roles = "child"
 	end
 	
-	@family = Fam.find(:all, :conditions => ["title=?", @user.family])
+	@family = Fam.first(:conditions => ["title=?", @user.family])
 	
 	#@user = @family.users.build(params[:user])
 	#@family = Family.find(:all, :conditions => ["title=?", @user.family])
 	
-    @user.fam_id = @family[0].id 
+    @user.fam_id = @family.id 
 	
 
 	
     if @user.save
-      flash[:notice] = @family[0].id #"Account registered!"
+      flash[:notice] = @family.id #"Account registered!"
       redirect_back_or_default account_url
     else
       render :action => :new
@@ -45,19 +45,41 @@ class UsersController < ApplicationController
   
   def show
     @user = @current_user
+		if @user.female == false
+			@picture = '../images/Profil/boy.png'
+		else
+			@picture = '../images/Profil/girl.png'
+		end
+		
+		@presents_got = Reward.all(:conditions => ["user_id=? and finished=?", @user.id, true])
+		@present = Reward.first(:conditions => ["user_id=? and finished=?", @user.id, false])
+		stars_count = @user.entire_stars_count
+		
+		if !@present.nil?
+			if !stars_count.nil?
+				@presents_got.each{ |presents|
+					stars_count -= presents.points
+				}
+				@stars_to_present = @present.points - stars_count
+				if @stars_to_present >= @present.points
+						@present.update_attributes(:finished => 1)
+				end
+			else 
+				@stars_to_present = @present.points
+			end
+		end
   end
  
   def edit
     if @current_user.roles == "admin"
 	  @user = User.find(params[:id], :conditions => ["fam_id=?", @current_user.fam_id])
 		@calendar = Calendar.first(params[:id], :conditions =>["fam_id=?", @current_user.fam_id])
-		@colors= findcolors
-    
-		
+		@colors= findcolors.merge!({@user.color => @user.color})
+
 	else
 	  @user = User.find(params[:id])
 		@calendar = Calendar.first(:conditions =>["fam_id=?", @current_user.fam_id])
-    @colors= findcolors
+    @colors= findcolors.merge!({@user.color => @user.color})
 
  end
    
@@ -84,13 +106,18 @@ class UsersController < ApplicationController
   def update
     if @current_user.roles == "admin"
 	   @user = User.find(params[:id], :conditions => ["fam_id=?", @current_user.fam_id])
+		 @color_before = @user.color
 		else
 				@user = @current_user
 		end
     if @user.update_attributes(params[:user])
 			@calendar = Calendar.first(:conditions => ["fam_id=?", @current_user.fam_id])
-			#color_used = (params[:user]).color
-			#@calendar.update_attributes(:color_used => true)
+			#@calendar.update_attributes(:#{})
+			color_after = @user.color
+			@calendar.update_attributes(@user.color => 1)
+			if @color_before != color_after
+					@calendar.update_attributes(@color_before => 0)
+			end
       flash[:notice] = "Account updated!"
       redirect_to account_url
 	 
@@ -111,6 +138,10 @@ class UsersController < ApplicationController
 	
 	def addStar
 	  @user = User.find(params[:id])
+		@event = Event.first(params[:event_id])
+		
+		@event.update_attributes(:finished => 1)
+		
 		flash[:notice] = "in here"
 	  if @user.entire_stars_count.nil?
 		  new_count = 1;
@@ -130,6 +161,10 @@ class UsersController < ApplicationController
 	
 	def addCloud
 		@user = User.find(params[:id])
+		
+		@event = Event.find(params[:event_id])
+		@event.update_attributes(:finished => 1)
+		
 		flash[:notice] = "in here"
 	  if @user.clouds.nil?
 		  new_count = 1;

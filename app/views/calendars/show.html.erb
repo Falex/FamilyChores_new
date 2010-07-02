@@ -62,6 +62,14 @@
 		$('.events').toggle(200);
 	});
 	
+	$("div.close_chores").click(function(event){
+		$('.chores').toggle(200);
+	});
+	
+	$("div.close_events").click(function(event){
+		$('.events').toggle(200);
+	});
+	
 	
 	<!--$(color).toggle(400);return false;}); -->
 
@@ -126,7 +134,11 @@
 	<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png') %></div>
 	<div class = "block">
 			<% @calendar.chores.each do |chore| %>
-				<%= image_tag(chore.image_url) %>
+				<% if !chore.image_url.nil? %>
+					<%= image_tag(chore.image_url) %>
+				<% else %>
+					<%= image_tag(chore.image.url) %>
+				<% end %>
 				<%= chore.title %>
 			<% end %>
 	</div>
@@ -136,21 +148,24 @@
 <% end %>
 	
 	
-<div class="btn_left"> 
-</div>
+
 <div class="sc_menu">
 	<div id="members">
 		<% @id = @calendar.id %>
 		<ul class="sc_menu">
 			<% @family.each do |member|%>
 			    <li>
-						<%= member.login %>
+						<%=h member.login %>
 						<% frame = "<div class = '#{member.color}'>"%>
 						<%= frame %>
 							<% if member.photo.exists? %>
 								<a href="#"><%= image_tag(member.photo.url) %> </a>
 							<% else %>
-								<a href="#"><%= image_tag('girl.jpg') %> </a>
+								<% if member.female == true %>
+									<a href="#"><%= image_tag('../images/Kalender/girl.png') %> </a>
+								<% else %>
+									<a href="#"><%= image_tag('../images/Kalender/boy.png') %> </a>
+								<% end %>
 							<% end %>
 						</div>
 						<div class = "checkbox"> 
@@ -161,34 +176,26 @@
 						</div>
 					</li>
 			<% end %>
-			<% @family.each do |member|%>
-			    <li>
-						<%= member.login %>
-						<% frame = "<div class = '#{member.color}'>"%>
-						<%= frame %>
-							<% if member.photo.exists? %>
-								<a href="#"><%= image_tag(member.photo.url) %> </a>
-							<% else %>
-								<a href="#"><%= image_tag('girl.jpg') %> </a>
-							<% end %>
-						</div>
-					</li>
-			<% end %>
+
 			
 		</ul>
 	</div>
 </div>
-<div class="btn_right"></div>
+
 <ul>
+<% if permitted_to? :create, @chore %>
 	<div class="chores">
+		<div class="close_chores"><%= image_tag("../images/Ranking/Vogel2.png") %></div>
 		<li>
-			<% if permitted_to? :create, @chore %>
+			
 				<h3>Create Chores</h3>
 				<%= render :partial => @chore = Chore.new, :locals => { :button_name => 'Create'} %>
-			<% end %>
+			
 		</li>
 	</div>
+<% end %>
 	<div class="events">
+		<div class="close_events"><%= image_tag("../images/Ranking/Vogel2.png") %></div>
 		<li>
 			<% if !@calendar.chores.empty? %>
 				<h3>Create new event</h3>
@@ -227,16 +234,23 @@
 							<![endif]>
 								<% frame = "<div class = '#{event.user.color}'>"%>
 								<%= frame %>
-									<%= image_tag(event.chore.image_url) %> 
+									<% if !event.chore.image_url.nil? %>
+										<%= image_tag(event.chore.image_url) %> 
+									<% else %>
+										<%= image_tag(event.chore.image.url) %>
+									<% end %>
 								</div>
 					</div>
-								<div class="rating">
-									<div class="block">
-										<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users" %>
-										<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users" %>
-								
+							<% if permitted_to? :create, @chore %>
+								<% if event.finished != 1 %>
+									<div class="rating">
+										<div class="block">
+											<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
+											<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
+										</div>
 									</div>
-								</div>
+								<% end %>
+							<% end %>
 								<% usedAlready[z] = true %>
 								<% break %>
 							</span>
@@ -255,7 +269,8 @@
 
 
 
-
+<%
+=begin %>
 <div id="details">
 	<div id="events">
 		<h3>Events</h3>
@@ -280,4 +295,5 @@
 	</div>
 	<h3>Create Rewards</h3>
 	<%= render :partial => @reward = Reward.new, :locals => { :button_name => 'Create'}%>
-</div>
+</div><%
+=end %>

@@ -10,6 +10,7 @@ authorization do
 	role :parent do
 	  includes :child
 	  has_permission_on [:events, :calendars, :chores], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+		has_permission_on :users, :to => [:addStar, :addCloud]
 	end
 	
 	role :admin do

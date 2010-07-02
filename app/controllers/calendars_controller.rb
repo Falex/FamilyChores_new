@@ -37,6 +37,7 @@ class CalendarsController < ApplicationController
 	@fam = Fam.find(:all)
 	#@help = @fam[0].users[0].id
 
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @calendar }

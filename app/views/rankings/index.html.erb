@@ -4,6 +4,9 @@
 
 <div id="ranking">
 	<% place = 1 %>
+	<div class="leine">
+		<%= image_tag("../images/Ranking/Leine.png") %>
+	</div>
 	<% @rankings.each do |member| %>
 		<div id="member">
 			<h3><%=h member.login %></h3>
@@ -11,14 +14,15 @@
 				<p><%=h member.stars_count %></p>
 				<p><%=h member.entire_stars_count %></p>
 			<% end %>
-			<% frame = "<div class = '#{member.color}'>"%>
-			<%= frame %>
-				<% if member.photo.exists? %>
-					<%= image_tag(member.photo.url) %> 
-				<% else %>
-					<%= image_tag('girl.jpg') %> 
-				<% end %>
-			</div>
+				<% frame = "<div class = '#{member.color}'>"%>
+				<%= frame %>
+					<% if member.photo.exists? %>
+						<%= image_tag(member.photo.url) %> 
+					<% else %>
+						<%= image_tag('girl.jpg') %> 
+					<% end %>
+				</div>
+		
 			<div class="award">
 				<h2><%= place %></h2>
 				<% if place < 4 %>
@@ -32,8 +36,9 @@
 	<% end %>
 </div>
 
-<div class="pillar">
-
+<div class="pillar"></div>
+<div class="kitty2">
+<%= image_tag('../images/Ranking/kitty2.png') %>
 </div>
 <% end %>
 

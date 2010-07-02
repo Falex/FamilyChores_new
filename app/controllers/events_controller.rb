@@ -45,8 +45,9 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.xml
   def create
-    @calendar = Calendar.find(params[:calendar_id])
+  @calendar = Calendar.find(params[:calendar_id])
 	@event = @calendar.events.build(params[:event])
+	@event.finished = 0;
 	#@event.user_id = @current_user.id
 	
   

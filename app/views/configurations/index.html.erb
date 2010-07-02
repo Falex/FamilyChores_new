@@ -25,9 +25,8 @@
 	</script>
 <% end %>
 
-
+<h1>Configurations</h1>
 <div class="configuration_page"> 
-<h1> Configurations Page</h1>
 	<h3 class = "user" >Bentuzer</h3> 
 	<h3 class = "reward">Belohnungen</h3>
 	<h3 class = "event">Aufgaben</h3>
@@ -65,35 +64,55 @@
 	 </div>
 	 
 	 <div class = "rewards_conf">
-	  <% if !@rewards.empty? %>
-		  <% @rewards.each do |r| %>
-				<%=h r.title %>
-				<%=h r.points %>
-		  <% end %>
-	  <% end %>
+		 <ul>
+			<% if !@rewards.empty? %>
+				<% @rewards.each do |r| %>
+					<li>
+						<%=h r.title %>
+						<%=h r.points %>
+						<%=h r.user %>
+					</li>
+				<% end %>
+			<% end %>
+			</ul>
+			
+		
 		</div>
 	
-	<% if @events.empty? %>
-		<%= render :partial => 'events/show' %>
-	<% end %> 
-	
 		<div class = "events_conf">
-	  <% if !@events.empty? %>
-		  <% @events.each do |e| %>
-				<%=h e.description %>
-				<%= image_tag (e.chore.image.url) %>
-		  <% end %>
-	  <% end %>
+			<ul>
+			<% if !@events.empty? %>
+				<% @events.each do |e| %>
+					<li>
+							<% if !e.chore.image_url.nil? %>
+								<%= image_tag (e.chore.image_url) %>
+							<% else %>
+								<%= image_tag (e.chore.image.url) %>
+							<% end %>
+						<%=h e.description %>
+						<%=h e.chore.title %>
+						<%= e.start_on %>
+					</li>
+				<% end %>
+			<% end %>
+			</ul>
 		</div>
 		
 		<div class = "chores_conf">
-			<% if !@chores.empty? %>
-				 <% @chores.each do |c| %>
-					<%= c.title %>
-					<%= image_tag (c.image_url) %>
-					<%= image_tag (c.image.url) %>
-				 <% end %>
-			<% end %>
+			<ul>
+				<% if !@chores.empty? %>
+					 <% @chores.each do |c| %>
+					 <li>
+							<% if !c.image_url.nil? %>
+								<%= image_tag (c.image_url) %>
+							<% else %>
+								<%= image_tag (c.image.url) %>
+							<% end %>
+							<%= c.title %>
+						</li>
+					 <% end %>
+				<% end %>
+			</ul>
 		</div>
 	
 	
