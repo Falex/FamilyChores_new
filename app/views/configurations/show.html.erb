@@ -1,0 +1,124 @@
+<% content_for(:head) do %>
+	<script type="text/javascript">
+	$(document).ready(function(){
+			$('.user_configurations').hide();
+			$('.events_conf').hide();
+			$('.chores_conf').hide();
+			$('.rewards_conf').hide();
+			
+			$("h3.user").click(function(event){
+			$('.user_configurations').toggle(200);
+			});
+			
+			$("h3.reward").click(function(event){
+			$('.rewards_conf').toggle(200);
+			});
+			
+			$("h3.event").click(function(event){
+			$('.events_conf').toggle(200);
+			});
+			
+			$("h3.chore").click(function(event){
+			$('.chores_conf').toggle(200);
+			});
+	});
+	</script>
+<% end %>
+
+<h1>Configurations</h1>
+<div class="configuration_page"> 
+	<h3 class = "user" >Bentuzer</h3> 
+	<h3 class = "reward">Belohnungen</h3>
+	<h3 class = "event">Aufgaben</h3>
+	<h3 class = "chore">Aufgabentypen</h3>
+</div>
+	
+<div class="configurations">	 
+	<div class= "user_configurations"> 
+		<% @users.each do |u| %>
+			 <% @user2 = u %>
+			 
+				 <p>
+				 <%= u.login %>
+				 </p>
+				
+					<% frame = "<div class = '#{u.color}'>"%>
+					<%= frame %>
+						<% if u.photo.exists? %>
+							<a href="#"><%= image_tag(u.photo.url) %> </a>
+						<% else %>
+							<a href="#"><%= image_tag('girl.jpg') %> </a>
+						<% end %>
+					</div>
+				 
+				 <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>
+				 <% form_for(@user2)  do |f| %>
+					 <%= f.error_messages %>
+				 
+					Child <%= f.radio_button :roles, 'child', :checked => true %> <br />
+						Parent <%= f.radio_button :roles, 'parent' %> <br />
+					 
+					 <%= f.submit 'Update' %>
+				 <% end %>
+		<% end %>
+	 </div>
+	 
+	 <div class = "rewards_conf">
+		 <ul>
+			<% if !@rewards.empty? %>
+				<% @rewards.each do |r| %>
+					<li>
+						<%=h r.title %>
+						<%=h r.points %>
+						<%=h r.user %>
+					</li>
+				<% end %>
+			<% end %>
+			</ul>
+			
+		
+		</div>
+	
+		<div class = "events_conf">
+			<ul>
+			<% if !@events.empty? %>
+				<% @events.each do |e| %>
+					<li>
+							<% if !e.chore.image_url.nil? %>
+								<%= image_tag (e.chore.image_url) %>
+							<% else %>
+								<%= image_tag (e.chore.image.url) %>
+							<% end %>
+						<%=h e.description %>
+						<%=h e.chore.title %>
+						<%= e.start_on %>
+					</li>
+				<% end %>
+			<% end %>
+			</ul>
+		</div>
+		
+		<div class = "chores_conf">
+			<ul>
+				<% if !@chores.empty? %>
+					 <% @chores.each do |c| %>
+					 <li>
+							<% if !c.image_url.nil? %>
+								<%= image_tag (c.image_url) %>
+							<% else %>
+								<%= image_tag (c.image.url) %>
+							<% end %>
+							<%= c.title %>
+						</li>
+					 <% end %>
+				<% end %>
+			</ul>
+		</div>
+	
+	
+	 
+</div>
+
+
+
+

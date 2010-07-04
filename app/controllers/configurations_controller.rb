@@ -1,6 +1,7 @@
 class ConfigurationsController < ApplicationController
   before_filter :authenticate
   before_filter :load_user
+	before_filter :load_calendar
   filter_resource_access
 
   def index
@@ -20,9 +21,15 @@ class ConfigurationsController < ApplicationController
   # GET /events/1
   # GET /events/1.xml
   def show
-	@hallo = @user.login
-    @users = User.find(params[:id])
+	#@hallo = @user.login
+  #@users = User.find(params[:id])
 
+		@users = User.find(:all, :conditions => ["fam_id=?", @user.fam_id])
+	  @calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		@rewards = Reward.all(:conditions => ["calendar_id=?", @calendar_id])
+		@events = Event.all(:conditions => ["calendar_id=?", @calendar_id])
+		@chores = Chore.all(:conditions => ["calendar_id=?", @calendar_id])
+	
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @configuration }
@@ -39,5 +46,9 @@ class ConfigurationsController < ApplicationController
 		unless current_user
 			redirect_to account_url
 		end
+  end
+	
+	def load_calendar
+    @calendar = Calendar.find(params[:calendar_id])
   end
 end

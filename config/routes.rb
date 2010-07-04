@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :fams, :has_many => :calendars
 
   map.resources :families
-  map.resources :configurations, :has_many => :users
+  map.resources :calendars, :has_many => :configurations #, :has_many => :users
   map.resources :chores
   map.resources :icalfiles
 	map.resources :calendars, :has_many => :rankings
