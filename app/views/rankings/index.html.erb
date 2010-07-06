@@ -14,13 +14,16 @@
 				<p><%=h member.stars_count %></p>
 				<p><%=h member.entire_stars_count %></p>
 			<% end %>
-				<% frame = "<div class = '#{member.color}'>"%>
-				<%= frame %>
+				<div class = '<%= member.color %>'>
 					<% if member.photo.exists? %>
-						<%= image_tag(member.photo.url) %> 
-					<% else %>
-						<%= image_tag('girl.jpg') %> 
-					<% end %>
+								<%= image_tag(member.photo.url) %>
+							<% else %>
+								<% if member.female == true %>
+									<%= image_tag('../images/Kalender/girl.png') %> 
+								<% else %>
+									<%= image_tag('../images/Kalender/boy.png') %> 
+								<% end %>
+							<% end %>
 				</div>
 		
 			<div class="award">

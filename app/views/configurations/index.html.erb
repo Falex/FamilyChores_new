@@ -42,13 +42,16 @@
 				 <%= u.login %>
 				 </p>
 				
-					<% frame = "<div class = '#{u.color}'>"%>
-					<%= frame %>
+					<div class = '<%= u.color %>'
 						<% if u.photo.exists? %>
-							<a href="#"><%= image_tag(u.photo.url) %> </a>
-						<% else %>
-							<a href="#"><%= image_tag('girl.jpg') %> </a>
-						<% end %>
+								<%= image_tag(u.photo.url) %>
+							<% else %>
+								<% if u.female == true %>
+									<%= image_tag('../images/Kalender/girl.png') %>
+								<% else %>
+									<%= image_tag('../images/Kalender/boy.png') %>
+								<% end %>
+							<% end %>
 					</div>
 				 
 				 <%= link_to 'Destroy Account', u, :confirm => 'Are you sure?', :method => :delete %>

@@ -9,31 +9,19 @@ class UsersController < ApplicationController
   
   def create
 
-    
-	#@family = Family.find(:all, :conditions => ["id=?", "1"])
-	#@user = @family.users.build(params[:user])
+		@user = User.new(params[:user])
+		@family = Fam.first(:conditions => {:title => @user.family})
+		
+		if @family.empty?
+			 @family = Fam.new(:title => @user.family)
+			 @family.save
+			 @user.roles = "admin"
+		else
+			 @user.roles = "child"
+		end
 	
-	@user = User.new(params[:user])
-	#@family = Family.find(:all, :conditions => ["title=?", @user.family])
-	@family = Fam.first(:conditions => ["title=?", @user.family])
-	
-	if @family.empty?
-	   #@family = Family.new(:title => @user.family)
-	   @family = Fam.new(:title => @user.family)
-	   @family.save
-	   @user.roles = "admin"
-	else
-	   @user.roles = "child"
-	end
-	
-	@family = Fam.first(:conditions => ["title=?", @user.family])
-	
-	#@user = @family.users.build(params[:user])
-	#@family = Family.find(:all, :conditions => ["title=?", @user.family])
-	
+		@family = Fam.first(:conditions => {:title => @user.family})
     @user.fam_id = @family.id 
-	
-
 	
     if @user.save
       flash[:notice] = @family.id #"Account registered!"
@@ -72,8 +60,8 @@ class UsersController < ApplicationController
  
   def edit
     if @current_user.roles == "admin"
-	  @user = User.find(params[:id], :conditions => ["fam_id=?", @current_user.fam_id])
-		@calendar = Calendar.first(params[:id], :conditions =>["fam_id=?", @current_user.fam_id])
+	  @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
+		@calendar = Calendar.first(params[:id], :conditions =>{:fam_id => @current_user.fam_id})
 		@colors= findcolors.merge!({@user.color => @user.color})
 
 	else
@@ -105,18 +93,18 @@ class UsersController < ApplicationController
   
   def update
     if @current_user.roles == "admin"
-	   @user = User.find(params[:id], :conditions => ["fam_id=?", @current_user.fam_id])
+	   @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
 		 @color_before = @user.color
 		else
 				@user = @current_user
+				@color_before = @user.color
 		end
     if @user.update_attributes(params[:user])
-			@calendar = Calendar.first(:conditions => ["fam_id=?", @current_user.fam_id])
-			#@calendar.update_attributes(:#{})
+			@calendar = Calendar.first(:conditions => {:fam_id => @current_user.fam_id})
 			color_after = @user.color
 			@calendar.update_attributes(@user.color => 1)
 			if @color_before != color_after
-					@calendar.update_attributes(@color_before => 0)
+				@calendar.update_attributes(@color_before => 0)
 			end
       flash[:notice] = "Account updated!"
       redirect_to account_url
@@ -152,9 +140,7 @@ class UsersController < ApplicationController
 	  if @user.update_attributes(:entire_stars_count => new_count)
 			flash[:notice] = "Added star"
 	  end
-		
 		calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
-		
 		redirect_to calendar_url(:id => calendar_id)
 
 	end

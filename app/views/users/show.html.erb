@@ -1,8 +1,7 @@
 <h2>Your Account</h2>
 
 <div id="profile_image">
-	<% frame = "<div class = '#{@user.color}'>"%>
-		<%= frame %>
+	<div class = '<%= @user.color %>'>
 		<% if @user.photo.exists? %>
 			<%= image_tag(@user.photo.url) %> 
 		<% else %>

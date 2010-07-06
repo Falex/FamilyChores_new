@@ -6,8 +6,8 @@ class RewardsController < ApplicationController
     #calendar = Calendar.find(params[:calendar_id])
     #@rewards = Reward.all
 		#@rewards = @calendar.rewards.find(params[:id])
-		@calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
-		@rewards = Reward.all(:conditions => ["calendar_id=?", @calendar_id])
+		@calendar_id = Calendar.first(:select => 'id', :conditions => {:fam_id => @user.fam_id})
+		@rewards = Reward.all(:conditions => {:calendar_id => @calendar_id})
 
     respond_to do |format|
       format.html # index.html.erb

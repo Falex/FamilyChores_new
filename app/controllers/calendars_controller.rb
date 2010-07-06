@@ -6,14 +6,12 @@ class CalendarsController < ApplicationController
   # GET /calendars
   # GET /calendars.xml
   def index
-    #@calendars = Calendar.all
-	@login = @user.login
-	@family_id = @user.fam_id
-	@family = Fam.find(:all, :conditions => ["id=?", @family_id])
-	@calendars = @family[0].users[0].calendars
-	#@calendars = @user.calendars
-	@user_session = params[:user_session]
-	@count = @user.calendars.count
+		@login = @user.login
+		@family_id = @user.fam_id
+		@family = Fam.find(@family_id)
+		@calendars = @family.users[0].calendars
+		@user_session = params[:user_session]
+		@count = @user.calendars.count
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,19 +23,13 @@ class CalendarsController < ApplicationController
   # GET /calendars/1.xml
   def show
     @family_id = @user.fam_id
-	@login = @user.login
-	@family = Fam.find(:all, :conditions => ["id=?", @family_id])
-    #@calendar = @user.calendars.find(params[:id])
-	@calendar = @family[0].users[0].calendars.find(params[:id])
-	@entries = @calendar.events;
-	#@family = @calendar.families
-	#@family = Family.find(:all, :conditions => ["id=?", "1"])
-	@user = User.find(:all, :conditions => ["id=?", @calendar.user_id])
-	@family = User.find(:all, :conditions => ["fam_id=?", @user[0].fam_id])
-	@fam = Fam.find(:all)
-	#@help = @fam[0].users[0].id
-
-
+		@login = @user.login
+		@family = Fam.find(@family_id)
+		@calendar = @family.users[0].calendars.find(params[:id])
+		@entries = @calendar.events;
+		@user = User.all(@calendar.user_id)
+		@family = User.all(:conditions => {:fam_id => @user[0].fam_id})
+		
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @calendar }
@@ -64,11 +56,10 @@ class CalendarsController < ApplicationController
   # POST /calendars.xml
   def create
     
-	@family_id = @user.fam_id
-	@family = Fam.find(:all, :conditions => ["id=?", @family_id])
-	@calendar = @user.calendars.build(params[:calendar])
-	@calendar.fam_id =  @family[0].id
-	#@calendar = @family[0].calendars.build(params[:calendar])
+		@family_id = @user.fam_id
+		@family = Fam.find(@family_id)
+		@calendar = @user.calendars.build(params[:calendar])
+		@calendar.fam_id =  @family.id
 
     respond_to do |format|
       if @calendar.save

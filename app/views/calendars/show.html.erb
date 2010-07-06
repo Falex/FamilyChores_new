@@ -156,8 +156,7 @@
 			<% @family.each do |member|%>
 			    <li>
 						<%=h member.login %>
-						<% frame = "<div class = '#{member.color}'>"%>
-						<%= frame %>
+						<div class = '<%= member.color %>'>
 							<% if member.photo.exists? %>
 								<a href="#"><%= image_tag(member.photo.url) %> </a>
 							<% else %>
@@ -232,8 +231,7 @@
 							<![if !IE]>
 							<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
 							<![endif]>
-								<% frame = "<div class = '#{event.user.color}'>"%>
-								<%= frame %>
+								<div class = '<%= event.user.color %>'>
 									<% if !event.chore.image_url.nil? %>
 										<%= image_tag(event.chore.image_url) %> 
 									<% else %>

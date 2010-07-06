@@ -6,7 +6,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.xml
   def index
-    #@events = Event.all
 	@events = @calendar.events.paginate(:page => params[:page], :order => 'created_at ASC', :per_page => 3)
 
     respond_to do |format|
@@ -48,18 +47,14 @@ class EventsController < ApplicationController
   @calendar = Calendar.find(params[:calendar_id])
 	@event = @calendar.events.build(params[:event])
 	@event.finished = 0;
-	#@event.user_id = @current_user.id
 	
-  
-    #@event = Event.new(params[:event])
 
     respond_to do |format|
       if @event.save
         flash[:notice] = 'Event was successfully created.'
-        # original redirect: format.html { redirect_to(@event) }
-		# modified for extra view: format.html { redirect_to([@calendar, @event]) }
-		format.html { redirect_to(@calendar) }
-        format.xml  { render :xml => @event, :status => :created, :location => @event }
+    
+				format.html { redirect_to(@calendar) }
+				format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
@@ -91,9 +86,7 @@ class EventsController < ApplicationController
     @event.destroy
 
     respond_to do |format|
-	  #format.html { redirect_to(calendar_events_path(@calendar)) }
-      #format.html { redirect_to(events_url) }
-	  format.html { redirect_to(@calendar) }
+			format.html { redirect_to(@calendar) }
       format.xml  { head :ok }
     end
   end
