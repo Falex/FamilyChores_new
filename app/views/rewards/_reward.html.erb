@@ -5,11 +5,10 @@
   </p>
   <p>
     <%= f.label :points %><br />
-    <%= f.select "points", options_for_select(["1", "2", 
-                  "5", "10", "15", "20", "30"]) %>
+    <%= f.select "points", @points %>
   </p>
 	
-	<%= f.collection_select(:user_id, @users = User.find(:all, :conditions => ["fam_id=?", @calendar.fam_id]), :id, :login) %>
+	<%= f.collection_select(:user_id, users = User.all(:conditions => {:fam_id => @calendar.fam_id}), :id, :login) %>
   <p>
     <%= f.submit button_name %>
   </p>

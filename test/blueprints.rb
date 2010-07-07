@@ -29,3 +29,8 @@ Chore.blueprint do
   title {Sham.title}
   image_url {Sham.title}
 end
+
+Reward.blueprint do
+	title {Sham.title}
+	points {"20"}
+end

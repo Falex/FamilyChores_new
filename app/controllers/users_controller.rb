@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user.fam_id = @family.id 
 	
     if @user.save
-      flash[:notice] = @family.id #"Account registered!"
+      flash[:notice] = "Account registered!"
       redirect_back_or_default account_url
     else
       render :action => :new

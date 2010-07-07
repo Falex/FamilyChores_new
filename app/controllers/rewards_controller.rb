@@ -1,13 +1,10 @@
 class RewardsController < ApplicationController
   before_filter :load_user
+	#before_filter :load_calendar
   # GET /rewards
   # GET /rewards.xml
   def index
-    #calendar = Calendar.find(params[:calendar_id])
-    #@rewards = Reward.all
-		#@rewards = @calendar.rewards.find(params[:id])
 		@calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
-		#@rewards = Reward.all(:conditions => {:calendar_id => calendar.id})
 		@rewards = @calendar.rewards
 
     respond_to do |format|
@@ -33,7 +30,9 @@ class RewardsController < ApplicationController
   # GET /rewards/new.xml
   def new
     @reward = Reward.new
-
+		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
+		@points = points.sort
+		
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @reward }
@@ -45,6 +44,8 @@ class RewardsController < ApplicationController
 		@family = Fam.find(@user.fam_id)
 		@calendar = @family.users[0].calendars.first
     @reward = Reward.find(params[:id])
+		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
+		@points = points.sort
   end
 
   # POST /rewards
@@ -92,10 +93,6 @@ class RewardsController < ApplicationController
       format.html {redirect_to calendar_configurations_path(params[:calendar_id])}
       format.xml  { head :ok }
     end
-  end
-  
-  def calculate_points
-  
   end
   
   def load_calendar

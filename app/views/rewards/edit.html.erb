@@ -3,4 +3,4 @@
 <%= error_messages_for :reward %>
 <%= render :partial => @reward, :locals => { :button_name => "Update"} %>
 
-<%= link_to 'Back', calendar_rewards_path(@calendar) %>
+<%= link_to 'Back', calendar_configurations_path(@calendar.id) %>

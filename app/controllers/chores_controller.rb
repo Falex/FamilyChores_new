@@ -82,7 +82,7 @@ class ChoresController < ApplicationController
     @chore.destroy
 
     respond_to do |format|
-      format.html { redirect_to(@calendar) }
+      format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
       format.xml  { head :ok }
     end
   end

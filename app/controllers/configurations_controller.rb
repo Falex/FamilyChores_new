@@ -10,6 +10,8 @@ class ConfigurationsController < ApplicationController
 		@rewards = Reward.all(:conditions => {:calendar_id => calendar.id})
 		@events = Event.all(:conditions => {:calendar_id => calendar.id})
 		@chores = Chore.all(:conditions => {:calendar_id => calendar.id})
+		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
+		@points = points.sort
 		
     respond_to do |format|
       format.html # index.html.erb

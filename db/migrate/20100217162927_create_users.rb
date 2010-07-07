@@ -2,9 +2,8 @@ class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
 	t.references :fam
-
-    t.timestamps
-	t.string	:roles
+  t.timestamps
+	t.string	  :roles
 	t.string    :color
 	t.integer   :stars_count
 	t.integer   :entire_stars_count
