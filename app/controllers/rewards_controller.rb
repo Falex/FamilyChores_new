@@ -21,7 +21,7 @@ class RewardsController < ApplicationController
   def show
     #@calendar = Calendar.find(params[:calendar_id])
     #@reward = @calendar.rewards.find(params[:id])
-	@rewards = Reward.all
+		#@rewards = Reward.all
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,6 +42,8 @@ class RewardsController < ApplicationController
 
   # GET /rewards/1/edit
   def edit
+		@family = Fam.find(@user.fam_id)
+		@calendar = @family.users[0].calendars.first
     @reward = Reward.find(params[:id])
   end
 
@@ -54,7 +56,7 @@ class RewardsController < ApplicationController
     respond_to do |format|
       if @reward.save
         flash[:notice] = 'Reward was successfully created.'
-        format.html { redirect_to(@calendar) }
+        format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
         format.xml  { render :xml => @reward, :status => :created, :location => @reward }
       else
         format.html { render :action => "new" }
@@ -71,7 +73,7 @@ class RewardsController < ApplicationController
     respond_to do |format|
       if @reward.update_attributes(params[:reward])
         flash[:notice] = 'Reward was successfully updated.'
-        format.html { redirect_to(@reward) }
+        format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -87,7 +89,7 @@ class RewardsController < ApplicationController
     @reward.destroy
 
     respond_to do |format|
-      format.html { redirect_to(rewards_url) }
+      format.html {redirect_to calendar_configurations_path(params[:calendar_id])}
       format.xml  { head :ok }
     end
   end
@@ -97,7 +99,7 @@ class RewardsController < ApplicationController
   end
   
   def load_calendar
-   # @calendar = Calendar.find(params[:calendar_id])
+    @calendar = Calendar.find(params[:calendar_id])
   end
   
   def load_user

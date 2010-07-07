@@ -66,7 +66,7 @@ class ChoresController < ApplicationController
     respond_to do |format|
       if @chore.update_attributes(params[:chore])
         flash[:notice] = 'Chore was successfully updated.'
-        format.html { redirect_to([@calendar, @chore]) }
+        format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -82,7 +82,7 @@ class ChoresController < ApplicationController
     @chore.destroy
 
     respond_to do |format|
-      format.html { redirect_to(chores_url) }
+      format.html { redirect_to(@calendar) }
       format.xml  { head :ok }
     end
   end

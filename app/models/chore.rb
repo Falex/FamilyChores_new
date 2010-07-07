@@ -1,6 +1,7 @@
 class Chore < ActiveRecord::Base
   belongs_to :calendar
   belongs_to :user
+	has_many :events, :dependent => :destroy
 	
 	has_attached_file :image
 	

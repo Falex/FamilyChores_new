@@ -15,6 +15,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :calendars do |calendar|
     calendar.resources :configurations
   end
+	
+	map.resources :calendars do |calendar|
+    calendar.resources :rewards
+  end
 
   
   map.root :controller => 'user_sessions', :action => 'new' 

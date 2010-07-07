@@ -22,9 +22,9 @@ class CalendarsController < ApplicationController
   # GET /calendars/1
   # GET /calendars/1.xml
   def show
-    @family_id = @user.fam_id
+    #@family_id = @user.fam_id
 		@login = @user.login
-		@family = Fam.find(@family_id)
+		@family = Fam.find(@user.fam_id)
 		@calendar = @family.users[0].calendars.find(params[:id])
 		@entries = @calendar.events;
 		@user = User.find(@calendar.user_id)

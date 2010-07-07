@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   belongs_to :fam
   has_many :calendars
   has_many :events, :through => :calendars
-  has_many :rewards
+  has_many :rewards, :dependent => :destroy
   
   has_attached_file :photo
   validates_attachment_size :photo, :less_than => 100.kilobytes

@@ -1,6 +1,4 @@
-<h1>Listing rewards</h1>
-
-<%= link_to 'New reward', new_reward_path(@calendar) %>
+﻿<h1>Belohnungen</h1>
 
 <% for reward in @rewards %>
   <p>
@@ -9,10 +7,8 @@
   <p>
     points: <%=h reward.points %>
   </p>
- 
-    <%= link_to 'Show', [reward] %>
-    <%= link_to 'Edit', [:edit,reward] %>
-    <%= link_to 'Destroy', [reward], :confirm => 'Are you sure?', :method => :delete %>
+	<%= link_to 'Bearbeiten', [:edit, @calendar, reward] %>
+	<%= link_to 'Löschen', [@calendar, reward], :confirm => 'Are you sure?', :method => :delete %>
   
 <% end %>
 

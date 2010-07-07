@@ -678,8 +678,9 @@ input #chore_image{
 	position:relative;
 	left: 180px;
 	top: -300px;
-	width: 400px;
-	overflow:auto;
+	width: 380px;
+	overflow-y:auto;
+	overflow-x:hidden;
 	max-height:580px;
 }
 
