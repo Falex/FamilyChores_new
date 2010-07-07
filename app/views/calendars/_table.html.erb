@@ -27,11 +27,7 @@
 							<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
 							<![endif]>
 								<div class = '<%= event.user.color %>'>
-									<% if !event.chore.image_url.nil? %>
-										<%= image_tag(event.chore.image_url) %> 
-									<% else %>
-										<%= image_tag(event.chore.image.url) %>
-									<% end %>
+									<%= render "shared/chore_image", {:chore => event.chore} %>
 								</div>
 					</div>
 							<% if permitted_to? :create, @chore %>

@@ -66,7 +66,7 @@ class ChoresController < ApplicationController
     respond_to do |format|
       if @chore.update_attributes(params[:chore])
         flash[:notice] = 'Chore was successfully updated.'
-        format.html { redirect_to(@chore) }
+        format.html { redirect_to([@calendar, @chore]) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

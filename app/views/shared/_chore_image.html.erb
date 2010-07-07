@@ -1,0 +1,5 @@
+<% if !chore.image_url.nil? %>
+	<%= image_tag(chore.image_url) %>
+<% else %>
+	<%= image_tag(chore.image.url) %>
+<% end %>

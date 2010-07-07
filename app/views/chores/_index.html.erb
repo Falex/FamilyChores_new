@@ -1,16 +1,11 @@
-<h1>Listing chores</h1>
+﻿<h1>Listing chores</h1>
 
-<%= link_to 'New chore', new_chore_path(@calendar) %>
+<%= link_to 'New chore', new_calendar_chore_path(@calendar) %>
 <% for chore in @chores %>
   <h3><%=h chore.title %></h3>
-  <% if !chore.image_url.nil? %>
-		<%= image_tag (chore.image_url) %>
-	<% else %>
-		<%= image_tag (chore.image.url) %>
-	<% end %>
+  <%= render "shared/chore_image", {:chore => chore} %>
   <p>
-    <%= link_to 'Show', [@calendar, chore] %> |
-    <%= link_to 'Edit', [:edit, @calendar, chore] %> |
-	<%= link_to 'Destroy', [@calendar, chore], :confirm => 'Are you sure?', :method => :delete %>
+    <%= link_to 'Bearbeiten', [:edit, @calendar, chore] %> |
+		<%= link_to 'Löschen', [@calendar, chore], :confirm => 'Are you sure?', :method => :delete %>
   </p>
 <% end %>

@@ -36,19 +36,11 @@
 		</div>
 	
 		<div class = "events_conf">
-			<ul>
-				<% @events.each do |e| %>
-					<li>
-						<%= render 'events/index', :locals => {:events => @events} %>
-					</li>
-				<% end %>
-			</ul>
+			<%= render 'events/index', :locals => {:events => @events} %>
 		</div>
 		
 		<div class = "chores_conf">
-			<ul>
-				<%= render 'chores/index', :locals => {:chores => @chores} %>
-			</ul>
+			<%= render 'chores/index', :locals => {:chores => @chores} %>
 		</div>
 </div>
 

@@ -23,11 +23,7 @@
 		<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png') %></div>
 		<div class = "block">
 				<% @calendar.chores.each do |chore| %>
-					<% if !chore.image_url.nil? %>
-						<%= image_tag(chore.image_url) %>
-					<% else %>
-						<%= image_tag(chore.image.url) %>
-					<% end %>
+					<%= render "shared/chore_image", {:chore => chore} %>
 					<%= chore.title %>
 				<% end %>
 		</div>
