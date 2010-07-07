@@ -13,7 +13,7 @@
   
   <p>
     <%= f.label :color %><br/>
-    <%= f.select 'color', options_for_select(@colors)%>
+    <%= f.select 'color', @colors %>
   </p>
 
   <%= f.submit 'Update' %>

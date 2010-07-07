@@ -1,0 +1,104 @@
+	<script type="text/javascript">
+
+	$(document).ready(function(){
+
+	//Hide (Collapse) the toggle containers on load
+	$(".toggle_container").hide(); 
+	$(".rating").hide();
+	$(".chores").hide();
+	$(".events").hide();
+	
+	
+	
+
+	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+	$("div.trigger").click(function(){
+		$(this).toggleClass("active").next().slideToggle("slow");
+		
+	});
+	
+	$("div.calendar_entry").click(function(){
+		$(this).toggleClass("active").next().slideToggle("slow");
+	});
+
+	$("div.checkbox").click(function(event){
+	
+		var color = $(this).children('p').html();
+		var help = ".calendar_entry ." + color;
+		$(help).toggle(400);
+		$(this).children('div').children('img').toggle();
+		
+		return false;
+	}); 
+	
+	$("div.upload").click(function(event){
+		$('.chores').toggle(200);
+	});
+	
+	$("div.newEvent").click(function(event){
+		$('.events').toggle(200);
+	});
+	
+	$("div.close_chores").click(function(event){
+		$('.chores').toggle(200);
+	});
+	
+	$("div.close_events").click(function(event){
+		$('.events').toggle(200);
+	});
+	
+	
+	<!--$(color).toggle(400);return false;}); -->
+
+});
+
+
+	
+		$(function(){
+  //Get our elements for faster access and set overlay width
+  var div = $('div.sc_menu'),
+               ul = $('ul.sc_menu'),
+               // unordered list's left margin
+               ulPadding = 15;
+							 
+	var btn_left = $('div.btn_left');
+	var btn_right = $('div.btn_right');
+	var offset = 0;
+
+  //Get menu width
+  var divWidth = div.width();
+
+  //Remove scrollbars
+  div.css({overflow: 'hidden'});
+
+  //Find last image container
+  var lastLi = ul.find('li:last-child');
+
+  //When user move mouse over menu
+  div.mousemove(function(e){
+    //As images are loaded ul width increases,
+    //so we recalculate it each time
+    var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+
+    var left = (e.pageX - div.offset().left) * (ulWidth-divWidth) / divWidth;
+    div.scrollLeft(left);
+  });
+	
+	
+	btn_left.click(function(e){
+		if (offset < divWidth + 120) {offset = offset + 50;}
+		var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+		var left = (offset - div.offset().left) * (ulWidth-divWidth) / divWidth;
+		div.scrollLeft(left);
+	});
+	
+	btn_right.click(function(e){
+	
+	offset = offset - 50;
+	var ulWidth = lastLi[0].offsetLeft + lastLi.outerWidth() + ulPadding;
+	var left = (offset - div.offset().left) * (ulWidth-divWidth) / divWidth;
+	div.scrollLeft(left);
+	});
+	
+});
+	</script>

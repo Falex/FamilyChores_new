@@ -27,8 +27,8 @@ class CalendarsController < ApplicationController
 		@family = Fam.find(@family_id)
 		@calendar = @family.users[0].calendars.find(params[:id])
 		@entries = @calendar.events;
-		@user = User.all(@calendar.user_id)
-		@family = User.all(:conditions => {:fam_id => @user[0].fam_id})
+		@user = User.find(@calendar.user_id)
+		@users = User.all(:conditions => {:fam_id => @user.fam_id}) # die whole Family
 		
     respond_to do |format|
       format.html # show.html.erb

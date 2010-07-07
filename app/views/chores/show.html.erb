@@ -4,20 +4,13 @@
 </p>
 
 <p>
-  <b>Image url:</b>
-  <%=h @chore.image_url %>
-</p>
-
-<p>
   <b>Image:</b>
-  <%= image_tag(@chore.image_url) %> 
+	<% if !@chore.image_url.nil? %>
+		<%= image_tag(@chore.image_url) %> 
+	<% else %>
+		<%= image_tag(@chore.image.url) %> 
+	<% end %>
 </p>
-
-<p>
-  <b>Image:</b>
-  <%= image_tag(@chore.image.url) %> 
-</p>
-
 
 <%= link_to 'Edit', [:edit, @calendar, @chore] %> |
 <%= link_to 'Back', calendars_path(@calendar) %>

@@ -5,6 +5,7 @@ class Calendar < ActiveRecord::Base
   #has_many :users
   #belongs_to :users
   belongs_to :fam
+	#has_many :configurations
   
   validates_presence_of :title
   validates_length_of :title, :minimum => 3

@@ -66,9 +66,8 @@
 		<% end %>
 	 </div>
 	 
-	 <div class = "rewards_conf">
-		 <ul>
-			<% if !@rewards.empty? %>
+	  <div class = "rewards_conf">
+		  <ul>
 				<% @rewards.each do |r| %>
 					<li>
 						<%=h r.title %>
@@ -76,15 +75,11 @@
 						<%=h r.user %>
 					</li>
 				<% end %>
-			<% end %>
 			</ul>
-			
-		
 		</div>
 	
 		<div class = "events_conf">
 			<ul>
-			<% if !@events.empty? %>
 				<% @events.each do |e| %>
 					<li>
 							<% if !e.chore.image_url.nil? %>
@@ -97,7 +92,6 @@
 						<%= e.start_on %>
 					</li>
 				<% end %>
-			<% end %>
 			</ul>
 		</div>
 		

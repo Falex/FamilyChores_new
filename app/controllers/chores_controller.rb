@@ -1,9 +1,11 @@
 class ChoresController < ApplicationController
-  # GET /chores
-  # GET /chores.xml
+	before_filter :load_calendar
   filter_resource_access
+	
+	# GET /chores
+  # GET /chores.xml
   def index
-    @chores = Chore.all
+    @chores = @calendar.chores
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,5 +89,9 @@ class ChoresController < ApplicationController
   
   def load_calendar
     @calendar = Calendar.find(params[:calendar_id])
+  end
+	
+	def load_user
+    @user = @current_user
   end
 end

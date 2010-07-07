@@ -1,0 +1,21 @@
+<div class="sc_menu">
+	<div id="members">
+		<% @id = @calendar.id %>
+		<ul class="sc_menu">
+			<% @users.each do |member|%>
+			    <li>
+						<%=h member.login %>
+						<div class = '<%= member.color %>'>
+							<%= render 'shared/profile_image', {:user => member} %>
+						</div>
+						<div class = "checkbox"> 
+							<div>
+							<%= image_tag('../images/Kalender/hackerl_on.png') %>
+							</div>
+							<p><%= member.color %></p>
+						</div>
+					</li>
+			<% end %>		
+		</ul>
+	</div>
+</div>

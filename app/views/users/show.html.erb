@@ -2,11 +2,7 @@
 
 <div id="profile_image">
 	<div class = '<%= @user.color %>'>
-		<% if @user.photo.exists? %>
-			<%= image_tag(@user.photo.url) %> 
-		<% else %>
-			<%= image_tag(@picture) %> 
-		<% end %>
+		<%= render 'shared/profile_image', {:user => @user} %>
 	<div>
 </div>
 	
@@ -15,17 +11,14 @@
 	  Name:
 	  <b><%=h @user.login %></b>
 	</p>
-
 	<p>
 	  Email:
 	  <b><%=h @user.email %></b>
 	</p>
-
 	<p>
 	  Color:
 	  <b><%=h @user.color %></b>
 	</p>
-
 	<p>
 	  Role:
 	  <b><%=h @user.roles %></b>
@@ -33,7 +26,6 @@
 </div>
 
 <div class="stars_count">
-	
 	Stars Count:
 	<% if !@present.nil? %>
 		<p>
@@ -46,15 +38,15 @@
 </div> 
 
 <div class="stars_clouds">
-	  <div class="entire_stars_count">
-			<%= @user.entire_stars_count %>
-		</div>
-		<div class="clouds">
-			<%= @user.clouds %>
-		</div>
+	<div class="entire_stars_count">
+		<%= @user.entire_stars_count %>
+	</div>
+	<div class="clouds">
+		<%= @user.clouds %>
+	</div>
 </div>
-<div class="present"><%= image_tag('../images/Profil/Belohnung_big.png') %> </div>
 
+<div class="present"><%= image_tag('../images/Profil/Belohnung_big.png') %></div>
 <div class="kitty"><%= image_tag('../images/Profil/Kitty.png') %></div>
 
 <div class="points">

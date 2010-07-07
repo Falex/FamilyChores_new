@@ -14,18 +14,9 @@
 				<p><%=h member.stars_count %></p>
 				<p><%=h member.entire_stars_count %></p>
 			<% end %>
-				<div class = '<%= member.color %>'>
-					<% if member.photo.exists? %>
-								<%= image_tag(member.photo.url) %>
-							<% else %>
-								<% if member.female == true %>
-									<%= image_tag('../images/Kalender/girl.png') %> 
-								<% else %>
-									<%= image_tag('../images/Kalender/boy.png') %> 
-								<% end %>
-							<% end %>
-				</div>
-		
+			<div class = '<%= member.color %>'>
+				<%= render 'shared/profile_image', {:user => member} %>
+			</div>
 			<div class="award">
 				<h2><%= place %></h2>
 				<% if place < 4 %>

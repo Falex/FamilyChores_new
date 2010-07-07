@@ -60,34 +60,29 @@ class UsersController < ApplicationController
  
   def edit
     if @current_user.roles == "admin"
-	  @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
-		@calendar = Calendar.first(params[:id], :conditions =>{:fam_id => @current_user.fam_id})
+			@user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
+			@calendar = Calendar.first(params[:id], :conditions =>{:fam_id => @current_user.fam_id}) ## ist das dieselbe Zeile
+		else
+			@user = User.find(params[:id])
+			@calendar = Calendar.first(:conditions =>{:fam_id => @current_user.fam_id}) ## ist das dieselbe Zeile
+		end
 		@colors= findcolors.merge!({@user.color => @user.color})
-
-	else
-	  @user = User.find(params[:id])
-		@calendar = Calendar.first(:conditions =>["fam_id=?", @current_user.fam_id])
-    @colors= findcolors.merge!({@user.color => @user.color})
-
- end
-   
   end
 	
 	def findcolors
 		colors=Hash.new
 		if @calendar.green != true 
-		colors = {"green" => "green"}
+			colors = {"green" => "green"}
 		end
 		if @calendar.blue != true 
-		colors.merge!({"blue" => "blue"})
+			colors.merge!({"blue" => "blue"})
 		end
 		if @calendar.pink != true 
-		colors.merge!({"pink" => "pink"})
+			colors.merge!({"pink" => "pink"})
 		end
 		if @calendar.red != true 
-		colors.merge!({"red" => "red"})
+			colors.merge!({"red" => "red"})
 		end
-		
 		return colors
 	end
   
@@ -140,8 +135,8 @@ class UsersController < ApplicationController
 	  if @user.update_attributes(:entire_stars_count => new_count)
 			flash[:notice] = "Added star"
 	  end
-		calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
-		redirect_to calendar_url(:id => calendar_id)
+		calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
+		redirect_to calendar_url(:id => calendar.id)
 
 	end
 	
@@ -162,9 +157,9 @@ class UsersController < ApplicationController
 			flash[:notice] = "Added cloud"
 	  end
 		
-		calendar_id = Calendar.first(:select => 'id', :conditions => ["fam_id=?", @user.fam_id])
+		calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
 		
-		redirect_to calendar_url(:id => calendar_id)
+		redirect_to calendar_url(:id => calendar.id)
 	end
   
 

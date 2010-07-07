@@ -1,0 +1,24 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+			$('.user_configurations').hide();
+			$('.events_conf').hide();
+			$('.chores_conf').hide();
+			$('.rewards_conf').hide();
+			
+			$("h3.user").click(function(event){
+			$('.user_configurations').toggle(200);
+			});
+			
+			$("h3.reward").click(function(event){
+			$('.rewards_conf').toggle(200);
+			});
+			
+			$("h3.event").click(function(event){
+			$('.events_conf').toggle(200);
+			});
+			
+			$("h3.chore").click(function(event){
+			$('.chores_conf').toggle(200);
+			});
+	});
+</script>

@@ -6,11 +6,10 @@ class ConfigurationsController < ApplicationController
 
   def index
     @users = User.all(:conditions => {:fam_id => @user.fam_id})
-	  @calendar_id = Calendar.first(:select => 'id', :conditions => {:fam_id => @user.fam_id})
-		@rewards = Reward.all(:conditions => {:calendar_id => @calendar_id})
-		@events = Event.all(:conditions => {:calendar_id => @calendar_id})
-		@chores = Chore.all(:conditions => {:calendar_id => @calendar_id})
-
+	  calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
+		@rewards = Reward.all(:conditions => {:calendar_id => calendar.id})
+		@events = Event.all(:conditions => {:calendar_id => calendar.id})
+		@chores = Chore.all(:conditions => {:calendar_id => calendar.id})
 		
     respond_to do |format|
       format.html # index.html.erb
@@ -21,14 +20,12 @@ class ConfigurationsController < ApplicationController
   # GET /events/1
   # GET /events/1.xml
   def show
-	#@hallo = @user.login
-  #@users = User.find(params[:id])
-
 		@users = User.all(:conditions => {:fam_id => @user.fam_id})
-	  @calendar_id = Calendar.first(:select => 'id', :conditions => {:fam_id => @user.fam_id})
-		@rewards = Reward.all(:conditions => {:calendar_id => @calendar_id})
-		@events = Event.all(:conditions => {:calendar_id => @calendar_id})
-		@chores = Chore.all(:conditions => {:calendar_id => @calendar_id})
+	  calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
+		@rewards = Reward.all(:conditions => {:calendar_id => calendar.id})
+		@events = Event.all(:conditions => {:calendar_id => calendar.id})
+		@chores = Chore.all(:conditions => {:calendar_id => calendar.id})
+		
 	
     respond_to do |format|
       format.html # show.html.erb

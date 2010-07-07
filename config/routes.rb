@@ -9,15 +9,20 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :chores
   map.resources :icalfiles
 	map.resources :calendars, :has_many => :rankings
-	map.resources :rewards
-  
+	#map.resources :rewards
+  #map.resources :configurations, :path_prefix => '/calendars/:calendar_id'
+	
+	map.resources :calendars do |calendar|
+    calendar.resources :configurations
+  end
+
   
   map.root :controller => 'user_sessions', :action => 'new' 
   #map.resources :calendars, :has_many => users
   #map.resources :families, :has_many => :users
   map.resources :calendars, :has_many => :chores
   map.resources :calendars, :has_many => :events
-  #map.resources :calendars, :has_many => :rewards
+  map.resources :calendars, :has_many => :rewards
   map.resource :account, :controller => 'users'
   map.resources :users
   map.resource :user_session

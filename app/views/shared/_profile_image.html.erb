@@ -1,0 +1,9 @@
+<% if user.photo.exists? %>
+	<%= image_tag(user.photo.url) %>
+<% else %>
+	<% if user.female == true %>
+		<%= image_tag('../images/Kalender/girl.png') %> 
+	<% else %>
+		<%= image_tag('../images/Kalender/boy.png') %> 
+	<% end %>
+<% end %>
