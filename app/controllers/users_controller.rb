@@ -9,21 +9,31 @@ class UsersController < ApplicationController
   
   def create
 
+# bad code
 		@user = User.new(params[:user])
-		@family = Fam.first(:conditions => {:title => @user.family})
-		
-		if @family.nil?
+		@family = Fam.find_by_title(@user.family)	
+		@hasCalendar = false
+		if !@family.nil?
+			 @user.roles = "child"
+			 @hasCalendar = true
+		else
 			 @family = Fam.new(:title => @user.family)
 			 @family.save
 			 @user.roles = "admin"
-		else
-			 @user.roles = "child"
 		end
-	
-		@family = Fam.first(:conditions => {:title => @user.family})
-    @user.fam_id = @family.id 
-	
+		#@family = Fam.find_by_title(@user.family)
+		@user.fam_id = @family.id 
+		@user.color = findcolor
+
+# good code
+#		@families = Fam.find_or_create_by_title(params[:family])
+#		@user = @families.users.build(params[:user])
+#		@user.roles = "admin"
+		
     if @user.save
+			if @hasCalendar == false
+				@calendar = Calendar.create!(:title => @user.family, :user_id => @user.id, :fam_id => @family.id)
+			end
       flash[:notice] = "Account registered!"
       redirect_back_or_default account_url
     else
@@ -33,11 +43,6 @@ class UsersController < ApplicationController
   
   def show
     @user = @current_user
-		if @user.female == false
-			@picture = '../images/Profil/boy.png'
-		else
-			@picture = '../images/Profil/girl.png'
-		end
 		
 		@presents_got = Reward.all(:conditions => ["user_id=? and finished=?", @user.id, true])
 		@present = Reward.first(:conditions => ["user_id=? and finished=?", @user.id, false])
@@ -70,37 +75,27 @@ class UsersController < ApplicationController
   end
 	
 	def findcolors
-		colors=Hash.new
-		if @calendar.green != true 
-			colors = {"green" => "green"}
-		end
-		if @calendar.blue != true 
-			colors.merge!({"blue" => "blue"})
-		end
-		if @calendar.pink != true 
-			colors.merge!({"pink" => "pink"})
-		end
-		if @calendar.red != true 
-			colors.merge!({"red" => "red"})
+	  colors = {"green" => "green", "blue" => "blue", "pink" => "pink", "red" => "red"}
+		@fam = @user.fam
+		@users = @fam.users
+		@users.each do |u|
+			colors.delete(u.color)
 		end
 		return colors
+	end
+	
+	def findcolor
+		color = findcolors.values[0]
+		return color
 	end
   
   def update
     if @current_user.roles == "admin"
-	   @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
-		 @color_before = @user.color
+	    @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
 		else
-				@user = @current_user
-				@color_before = @user.color
+			@user = @current_user
 		end
     if @user.update_attributes(params[:user])
-			@calendar = Calendar.first(:conditions => {:fam_id => @current_user.fam_id})
-			color_after = @user.color
-			@calendar.update_attributes(@user.color => 1)
-			if @color_before != color_after
-				#@calendar.update_attributes(@color_before => 0)
-			end
       flash[:notice] = "Account updated!"
       redirect_to account_url
 	 
