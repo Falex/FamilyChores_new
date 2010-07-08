@@ -24,5 +24,23 @@ class User < ActiveRecord::Base
 		end
 		return colors
 	end
- 
+
+	def calculatePresentPoints(presents_got, present, stars_count)
+		if !present.nil?
+			if !stars_count.nil?
+				presents_got.each do |presents|
+					stars_count -= presents.points
+				end
+				difference = present.points - stars_count
+				if difference.abs >= present.points
+						present.update_attributes(:finished => 1)
+				end
+				stars_gathered = stars_count
+			else 
+				stars_gathered = 0
+			end
+			return stars_gathered
+		end
+	end
+	
 end

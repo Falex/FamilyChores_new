@@ -1,4 +1,4 @@
-<h2>Your Account</h2>
+﻿<h2>Your Account</h2>
 
 <div id="profile_image">
 	<div class = '<%= @user.color %>'>
@@ -26,18 +26,24 @@
 </div>
 
 <div class="stars_count">
-	Stars Count:
+	Dein nächstes Geschenk
 	<% if !@present.nil? %>
 		<p>
 			<%=h @present.title %>
 		</p>
 		<p>
-			<%= @stars_to_present %>/<%= @present.points %> 
+			<%= @stars_gathered %>/<%= @present.points %> 
+		</p>
+		<p>
+		Gesammelte Sterne / Benötigte Sterne
 		</p>
 	<% end %>
 </div> 
 
 <div class="stars_clouds">
+	<p>
+		Sterne & Wolken gesamt:
+	</p>
 	<div class="entire_stars_count">
 		<%= @user.entire_stars_count %>
 	</div>

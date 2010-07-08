@@ -31,9 +31,10 @@
 								</div>
 					</div>
 							<% if permitted_to? :create, @chore %>
-								<% if event.finished != 1 %>
+								<% if event.finished == false %>
 									<div class="rating">
 										<div class="block">
+											<%= event.finished %>
 											<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
 											<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
 										</div>

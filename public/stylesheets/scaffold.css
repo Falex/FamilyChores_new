@@ -767,15 +767,15 @@ input #chore_image{
 	color:white;
 	float:left;
 	margin-right:60px;
-	margin-top:30px;
+	margin-top:5px;
 	margin-left:15px;
 }
 
 .clouds{
 	font-size:20px;
-	color:white;
+	color:black;
 	float:left;
-	margin-top:30px;
+	margin-top:5px;
 	margin-left:15px;
 }
 

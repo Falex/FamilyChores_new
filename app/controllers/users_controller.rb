@@ -45,34 +45,21 @@ class UsersController < ApplicationController
   
   def show
     @user = @current_user
-		
-		@presents_got = Reward.all(:conditions => ["user_id=? and finished=?", @user.id, true])
-		@present = Reward.first(:conditions => ["user_id=? and finished=?", @user.id, false])
+		@presents_got = @user.rewards.all(:conditions => {:finished => true})
+		@present = @user.rewards.first(:conditions => {:finished => false})
 		stars_count = @user.entire_stars_count
-		
-		if !@present.nil?
-			if !stars_count.nil?
-				@presents_got.each{ |presents|
-					stars_count -= presents.points
-				}
-				@stars_to_present = @present.points - stars_count
-				if @stars_to_present >= @present.points
-						@present.update_attributes(:finished => 1)
-				end
-			else 
-				@stars_to_present = @present.points
-			end
-		end
+		#calculatePoints(@presents_got, @present, @user.entire_stars_count)was needed for class method
+		@stars_gathered = @user.calculatePresentPoints(@presents_got, @present, @user.entire_stars_count)
   end
  
   def edit
     if @current_user.roles == "admin"
 			@user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
-			@calendar = Calendar.first(params[:id], :conditions =>{:fam_id => @current_user.fam_id}) ## ist das dieselbe Zeile
 		else
 			@user = User.find(params[:id])
-			@calendar = Calendar.first(:conditions =>{:fam_id => @current_user.fam_id}) ## ist das dieselbe Zeile
 		end
+		#@calendar = Calendar.first(:conditions =>{:fam_id => @current_user.fam_id})
+		@calendar = @user.fam.calendar
 		@colors= @user.findcolors(@user.fam).merge!({@user.color => @user.color})
   end
 	
@@ -104,43 +91,33 @@ class UsersController < ApplicationController
 	def addStar
 	  @user = User.find(params[:id])
 		@event = Event.first(params[:event_id])
-		
-		@event.update_attributes(:finished => 1)
-		
-		flash[:notice] = "in here"
+		@event.update_attributes(:finished => true)
 	  if @user.entire_stars_count.nil?
 		  new_count = 1;
 	  else
 		  new_count = @user.entire_stars_count + 1
 	  end
-
 	  if @user.update_attributes(:entire_stars_count => new_count)
 			flash[:notice] = "Added star"
 	  end
 		calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
 		redirect_to calendar_url(:id => calendar.id)
-
 	end
 	
 	def addCloud
 		@user = User.find(params[:id])
-		
 		@event = Event.find(params[:event_id])
-		@event.update_attributes(:finished => 1)
-		
+		@event.update_attributes(:finished => true)
 		flash[:notice] = "in here"
 	  if @user.clouds.nil?
 		  new_count = 1;
 	  else
 		  new_count = @user.clouds + 1
 	  end
-
 	  if @user.update_attributes(:clouds => new_count)
 			flash[:notice] = "Added cloud"
 	  end
-		
 		calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
-		
 		redirect_to calendar_url(:id => calendar.id)
 	end
   
