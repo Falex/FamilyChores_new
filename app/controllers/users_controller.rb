@@ -2,14 +2,12 @@ class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
   
-  
   def new
     @user = User.new
   end
   
   def create
-
-# bad code
+# not good code
 		@user = User.new(params[:user])
 		@family = Fam.find_by_title(@user.family)	
 		@hasCalendar = false
@@ -23,7 +21,11 @@ class UsersController < ApplicationController
 		end
 		#@family = Fam.find_by_title(@user.family)
 		@user.fam_id = @family.id 
-		@user.color = findcolor
+			if @user.findcolors(@family).length > 0
+				@user.color = @user.findcolors(@family).values[0]
+			else
+				@user.color = green
+			end
 
 # good code
 #		@families = Fam.find_or_create_by_title(params[:family])
@@ -71,24 +73,9 @@ class UsersController < ApplicationController
 			@user = User.find(params[:id])
 			@calendar = Calendar.first(:conditions =>{:fam_id => @current_user.fam_id}) ## ist das dieselbe Zeile
 		end
-		@colors= findcolors.merge!({@user.color => @user.color})
+		@colors= @user.findcolors(@user.fam).merge!({@user.color => @user.color})
   end
 	
-	def findcolors
-	  colors = {"green" => "green", "blue" => "blue", "pink" => "pink", "red" => "red"}
-		@fam = @user.fam
-		@users = @fam.users
-		@users.each do |u|
-			colors.delete(u.color)
-		end
-		return colors
-	end
-	
-	def findcolor
-		color = findcolors.values[0]
-		return color
-	end
-  
   def update
     if @current_user.roles == "admin"
 	    @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
