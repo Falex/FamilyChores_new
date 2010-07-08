@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 		@user = User.new(params[:user])
 		@family = Fam.first(:conditions => {:title => @user.family})
 		
-		if @family.empty?
+		if @family.nil?
 			 @family = Fam.new(:title => @user.family)
 			 @family.save
 			 @user.roles = "admin"
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
 			color_after = @user.color
 			@calendar.update_attributes(@user.color => 1)
 			if @color_before != color_after
-				@calendar.update_attributes(@color_before => 0)
+				#@calendar.update_attributes(@color_before => 0)
 			end
       flash[:notice] = "Account updated!"
       redirect_to account_url

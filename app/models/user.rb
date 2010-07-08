@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   has_many :calendars
   has_many :events, :through => :calendars
   has_many :rewards, :dependent => :destroy
+	validates_presence_of :family
+	validates_presence_of :family_password
+	
   
   has_attached_file :photo
   validates_attachment_size :photo, :less_than => 100.kilobytes

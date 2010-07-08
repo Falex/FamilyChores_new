@@ -495,7 +495,7 @@ width:840px;
 	width:20px;
 	position:relative;
 	left:800px;
-	top:-60px;
+	top:-45px;
 	background: url(../images/Buttons/Pfeiler.png);
 }
 
@@ -804,8 +804,9 @@ p.edit_account a{
 .maskottchen{
 	width:374px;
 	height:355px;
-	float:right;
-	margin-top:200px;
+	position:absolute;
+	top:350px;
+	left:300px;
 }
 
 .register{

@@ -9,7 +9,7 @@
   </p>
   <p>
     <%= f.label :image, 'Select Chore Type' %> <br />
-	<%= f.collection_select(:chore_id, @chores = Chore.find(:all), :id, :title) %>
+	<%= f.collection_select(:chore_id, @chores = @calendar.chores, :id, :title) %>
   </p>
   <p>
 	<%= f.label :image, 'Select Member' %> <br />

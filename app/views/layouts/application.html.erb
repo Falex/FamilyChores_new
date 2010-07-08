@@ -22,7 +22,7 @@
 		<ul>
 			<li id="verwaltung">
 				<% if @current_user.roles == "admin" %>
-					<%= link_to image_tag("Verwaltung_light.png", :mouseover => "Verwaltung_dark.png" ,:border=>0), calendar_configurations_path(params[:id]) %> 
+					<%= link_to image_tag("Verwaltung_light.png", :mouseover => "Verwaltung_dark.png" ,:border=>0), calendar_configurations_path(@current_user.fam.calendar.id) %> 
 				<% end %>
 			</li>
 			<li>
