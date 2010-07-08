@@ -2,10 +2,10 @@ class CreateEvents < ActiveRecord::Migration
   def self.up
     create_table :events do |t|
       t.references :calendar
-	  t.references :chore
-	  t.references :user
+			t.references :chore
+			t.references :user
 	  
-	  t.string :finished
+			t.string :finished
       t.text :description
       t.date :start_on
       t.datetime :updated_at
