@@ -1,56 +1,57 @@
 <div id= "calendar_grid">
-<table>
-<tr id ="calendar_entries">
-<% 7.times  do |x|%>
-    <% time = Time.now.beginning_of_week + x * 86400%>
-    <td id="name_of_day">
-      <%= time.strftime("%a") %>
-	  <p class="day"><%= time.strftime("%d") %></p>
-    </td>
-<% end %>
- </tr>
- <tbody>
-<% usedAlready = {} %>
-<% 4.times  do |a|%>
-  <tr>
-  <% 7.times do |x| %>
-    <% time = Time.now.beginning_of_week + x * 86400%>
-	      <td>
-			 <% z=0 %>
-				<% @entries.each do |event| %>
-					<div class= "calendar_entry">
-						<% if event.start_on.day == time.day && !usedAlready.has_key?(z) && event.start_on.month == time.month %>
-							<!--[if IE]>
-							<%= @spantitle = "<span title='#{event.description}'>" %>
-							<![endif]-->
-							<![if !IE]>
-							<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
-							<![endif]>
-								<div class = '<%= event.user.color %>'>
-									<%= render "shared/chore_image", {:chore => event.chore} %>
-								</div>
-					</div>
+	<table>
+		<thead>
+			<tr class>
+				<% 7.times  do |x|%>
+						<% time = Time.now.beginning_of_week + x * 86400%>
+						<td id="name_of_day">
+							<%= time.strftime("%a") %>
+						<p class="day"><%= time.strftime("%d") %></p>
+						</td>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+		<% usedAlready = {} %>
+		<% 4.times  do |a|%>
+			<tr>
+			<% 7.times do |x| %>
+				<% time = Time.now.beginning_of_week + x * 86400%>
+					 <td>
+						<% z=0 %>
+						<% @entries.each do |event| %>
+							<div class= "calendar_entry">
+								<% if event.start_on.day == time.day && !usedAlready.has_key?(z) && event.start_on.month == time.month %>
+									<!--[if IE]>
+									<%= @spantitle = "<span title='#{event.description}'>" %>
+									<![endif]-->
+									<![if !IE]>
+									<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
+									<![endif]>
+										<div class = '<%= event.user.color %>'>
+											<%= render "shared/chore_image", {:chore => event.chore} %>
+										</div>
+									</span>
+							</div>
 							<% if permitted_to? :create, @chore %>
 								<% if event.finished == false %>
 									<div class="rating">
 										<div class="block">
-											<%= event.finished %>
 											<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
 											<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
 										</div>
 									</div>
 								<% end %>
 							<% end %>
-								<% usedAlready[z] = true %>
-								<% break %>
-							</span>
+							<% usedAlready[z] = true %>
+							<% break %>
 						<% end %>
 						<% z= z+1 %>
+						<% end %>
+					</td>
 				<% end %>
-		  </td>
-	<% end %>
-  </tr>
-<% end %>
-</tbody>
-</table>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
 </div>

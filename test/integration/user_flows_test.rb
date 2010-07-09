@@ -78,20 +78,38 @@ class UserFlowsTest < ActionController::IntegrationTest
 			end
 		end
 		
-		context 'edit account' do
+		context 'in edit account' do
 			setup do
 				visit '/account'
 				click_link 'Edit Account', :user => @user, :calendar => @user.fam.calendar
 				assert_equal "/users/#{@user.id}/edit", path 
 			end
-			should 'be able to change' do
-				#fill_in "login",  "a@aont.at"
-				#click_button 'Update'
-				#assert_response :success
-				#assert_equal '/account', path
+			should 'be able to change data' do
+				fill_in "login",  "a@aont.at"
+				fill_in "color", "green"
+				click_button 'Update'
+				assert_response :success
 			end
 		end
 		
-		
+		context 'in calendar' do
+			setup do
+				visit '/account'
+				click_link 'calendars'
+				assert_equal "/calendars/#{@user.fam.calendar.id}", path
+				@file = File.new(File.join(RAILS_ROOT, "/test/images/", "Blumen.png"))
+				@chore_params_2 = {:id => 1, :title => "Staubsaugen", :calendar_id => @calendar.id, :image => @file}
+				@chore_2 = Chore.create!(@chore_params_2)
+			end
+			should 'not be able to create chore' do
+				fill_in "title", "am Gang"
+				click_button 'Create'
+				assert_equal "/calendars/#{@user.fam.calendar.id}/chores", path
+			end
+			should 'not be able to create event' do
+				click_button 'Create'
+				assert_equal "/calendars/#{@user.fam.calendar.id}/events", path
+			end
+		end
 	end	
 end

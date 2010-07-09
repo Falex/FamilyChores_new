@@ -3,10 +3,6 @@
 		$("tbody").sortable({items: 'td', containment: 'table' });
 		$("td").hoverbox();
 	});
-	
-	$(document).ready(function() {
-    $("#accordion").accordion();
-  });
 </script>
 	
 <% content_for(:head) do %>
@@ -19,8 +15,8 @@
 <% content_for(:nav) do %>
 	<div class = "trigger"><%= image_tag('Aufgaben_light.png') %> </div>
 	<div class="toggle_container">
-		<div class="upload"><%= image_tag('../images/Buttons/Uploadicon.png') %></div>
-		<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png') %></div>
+		<div class="upload"><%= image_tag('../images/Buttons/Uploadicon.png', :id =>"chores") %></div>
+		<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png', :id => "events") %></div>
 		<div class = "block">
 				<% @calendar.chores.each do |chore| %>
 					<%= render "shared/chore_image", {:chore => chore} %>
@@ -37,7 +33,7 @@
 	<div class="chores">
 		<div class="close_chores"><%= image_tag("../images/Ranking/Vogel2.png") %></div>
 			<li>
-				<h3>Create Chores</h3>
+				<h3>Aufgabentyp erstellen</h3>
 				<%= render :partial => @chore = Chore.new, :locals => { :button_name => 'Create'} %>
 			</li>
 	</div>
@@ -46,7 +42,7 @@
 		<div class="close_events"><%= image_tag("../images/Ranking/Vogel2.png") %></div>
 			<li>
 				<% if !@calendar.chores.empty? %>
-					<h3>Create new event</h3>
+					<h3>Aufgabe erstellen</h3>
 					<%= render :partial => @event = Event.new, :locals => { :button_name => 'Create'}%>
 				<% end %>
 			</li>

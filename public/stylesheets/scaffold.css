@@ -68,7 +68,12 @@ div label {
 	color: #FFFFFF !important;
 	line-height: 60px;
 	text-decoration: none;
-	letter-spacing: 0.2em;
+	letter-spacing: 0.1em;
+	position:absolute;
+	top:5px;
+	left:800px;
+	font-size:30px;
+	font-family:Arial Black;
 }
 
 .box {
@@ -82,7 +87,7 @@ div label {
 	padding-top:20px;
 	padding-bottom: 20px;
 	background-color:#800000;
-	font-family:Snap ITC; 
+	font-family:Miriam; 
 	font-size: 20px;
 	color: #FFFFFF;
 
@@ -102,10 +107,8 @@ div label {
 	/*border: 2px solid #800000;*/
 	background-color:orange; /*#800000; */
 	text-align:center;
-	position:absolute;
-	top:680px;
-	left:-240px;
-	width:1200px;
+float:left;
+	width:1040px;
 }
 
 #errorExplanation {
@@ -187,13 +190,14 @@ li {
 		float:left;
 		padding:0px;
 		}
-#calendar_entries li {
+		
+.calendar_entries tr{
 	clear:both;
 	border:2px solid #800000;
 	list-style-type:none;
 	width:80px;
 	overflow:hidden;
-	height:80px;
+	max-height:10px;
 	color:#800000;
 	background-color:#FFFFFF;
 	z-index:4;
@@ -218,16 +222,19 @@ li #draggable {
 
 #calendar_grid {
 	float:left;
+	margin-left:50px;
 }
 	
 #name_of_day{
-	height:30px;
+	max-height:30px;
 	font-family:Miriam;
-	font-size: 15px;
+	font-weight:20px;
+	font-size: 20px;
 	color:white;
 	background: transparent url(../images/Kalendertageaktiv.png);
 	background-repeat:no-repeat;
-	padding-bottom:20px;
+	padding-top:5px;
+	padding-left:5px;
 }
 	
 li{
@@ -235,7 +242,7 @@ li{
 	padding:5px;
 	}
 	
-td{
+tbody td{
 	width:82px;
 	max-width: 82px;
 	max-height: 80px;
@@ -251,9 +258,11 @@ td{
 	/*float:left;*/
 	list-style-type: none;
 	text-align:right;
+	margin-top:100px;
 }
 
 .nav{
+	max-height:700px;
 	min-height:700px;
 	height:100%;
 	width: 200px;
@@ -408,18 +417,22 @@ margin: 0 0 5px;
 
 .calendar_entry div.pink{
 	background: url(../images/Kalender/Icons_Rahmen_pink.png);
+	background-repeat:no-repeat;
 }
 
 .calendar_entry div.blue{
 	background: url(../images/Kalender/Icons_Rahmen_blau.png);
+	background-repeat:no-repeat;
 }
 
 .calendar_entry div.green{
 	background: url(../images/Kalender/Icons_Rahmen_limette.png);
+	background-repeat:no-repeat;
 }
 
 .calendar_entry div.red{
 	background: url(../images/Kalender/Icons_Rahmen_rot.png);
+	background-repeat:no-repeat;
 }
 
 

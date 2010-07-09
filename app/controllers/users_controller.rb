@@ -19,7 +19,6 @@ class UsersController < ApplicationController
 			 @family.save
 			 @user.roles = "admin"
 		end
-		#@family = Fam.find_by_title(@user.family)
 		@user.fam_id = @family.id 
 			if @user.findcolors(@family).length > 0
 				@user.color = @user.findcolors(@family).values[0]
@@ -35,6 +34,7 @@ class UsersController < ApplicationController
     if @user.save
 			if @hasCalendar == false
 				@calendar = Calendar.create!(:title => @user.family, :user_id => @user.id, :fam_id => @family.id)
+				@calendar.createDefaultChores(@calendar)
 			end
       flash[:notice] = "Account registered!"
       redirect_back_or_default account_url
@@ -48,7 +48,6 @@ class UsersController < ApplicationController
 		@presents_got = @user.rewards.all(:conditions => {:finished => true})
 		@present = @user.rewards.first(:conditions => {:finished => false})
 		stars_count = @user.entire_stars_count
-		#calculatePoints(@presents_got, @present, @user.entire_stars_count)was needed for class method
 		@stars_gathered = @user.calculatePresentPoints(@presents_got, @present, @user.entire_stars_count)
   end
  
@@ -58,12 +57,13 @@ class UsersController < ApplicationController
 		else
 			@user = User.find(params[:id])
 		end
-		#@calendar = Calendar.first(:conditions =>{:fam_id => @current_user.fam_id})
 		@calendar = @user.fam.calendar
 		@colors= @user.findcolors(@user.fam).merge!({@user.color => @user.color})
   end
 	
   def update
+		@user = @current_user
+		@colors= @user.findcolors(@user.fam).merge!({@user.color => @user.color})
     if @current_user.roles == "admin"
 	    @user = User.find(params[:id], :conditions => {:fam_id => @current_user.fam_id})
 		else
@@ -71,8 +71,7 @@ class UsersController < ApplicationController
 		end
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to account_url
-	 
+      redirect_to account_path 
     else
       render :action => :edit
     end
@@ -90,7 +89,7 @@ class UsersController < ApplicationController
 	
 	def addStar
 	  @user = User.find(params[:id])
-		@event = Event.first(params[:event_id])
+		@event = Event.find(params[:event_id])
 		@event.update_attributes(:finished => true)
 	  if @user.entire_stars_count.nil?
 		  new_count = 1;
@@ -108,7 +107,6 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@event = Event.find(params[:event_id])
 		@event.update_attributes(:finished => true)
-		flash[:notice] = "in here"
 	  if @user.clouds.nil?
 		  new_count = 1;
 	  else
