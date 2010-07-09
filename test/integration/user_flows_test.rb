@@ -107,8 +107,6 @@ class UserFlowsTest < ActionController::IntegrationTest
 				assert_equal "/calendars/#{@user.fam.calendar.id}/chores", path
 			end
 			should 'not be able to create event' do
-				click_button 'Create'
-				assert_equal "/calendars/#{@user.fam.calendar.id}/events", path
 			end
 		end
 	end	
