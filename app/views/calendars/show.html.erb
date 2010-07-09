@@ -15,8 +15,12 @@
 <% content_for(:nav) do %>
 	<div class = "trigger"><%= image_tag('Aufgaben_light.png') %> </div>
 	<div class="toggle_container">
-		<div class="upload"><%= image_tag('../images/Buttons/Uploadicon.png', :id =>"chores") %></div>
-		<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png', :id => "events") %></div>
+		<span title= "Neuen Aufgabentyp erstellen">
+			<div class="upload"><%= image_tag('../images/Buttons/Uploadicon.png', :id =>"chores") %></div>
+		</span>
+		<span title = "Aufgabe erstellen und zuteilen">
+			<div class="newEvent"><%= image_tag('../images/Buttons/Beschriftung.png', :id => "events") %></div>
+		</span>
 		<div class = "block">
 				<% @calendar.chores.each do |chore| %>
 					<%= render "shared/chore_image", {:chore => chore} %>

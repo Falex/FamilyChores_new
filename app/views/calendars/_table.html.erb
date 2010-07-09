@@ -23,10 +23,10 @@
 							<div class= "calendar_entry">
 								<% if event.start_on.day == time.day && !usedAlready.has_key?(z) && event.start_on.month == time.month %>
 									<!--[if IE]>
-									<%= @spantitle = "<span title='#{event.description}'>" %>
+									<span title='<%= event.description %>'>
 									<![endif]-->
 									<![if !IE]>
-									<%= @spantitle = "<span class='tip' onmouseover=\"tooltip('#{event.description}');\" onmouseout='exit();'>" %>
+									<span class="tip" onmouseover="tooltip('<%=event.description %>');" onmouseout="exit();">
 									<![endif]>
 										<div class = '<%= event.user.color %>'>
 											<%= render "shared/chore_image", {:chore => event.chore} %>
@@ -37,8 +37,12 @@
 								<% if event.finished == false %>
 									<div class="rating">
 										<div class="block">
-											<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
-											<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
+											<span title="negativ bewerten">
+												<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
+											</span>
+											<span title="positiv bewerten">
+												<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
+											</span>
 										</div>
 									</div>
 								<% end %>
