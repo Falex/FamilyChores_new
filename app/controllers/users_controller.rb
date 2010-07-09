@@ -10,32 +10,31 @@ class UsersController < ApplicationController
 # not good code
 		@user = User.new(params[:user])
 		@family = Fam.find_by_title(@user.family)	
-		@hasCalendar = false
-		if !@family.nil?
-			 @user.roles = "child"
-			 @hasCalendar = true
+		if !@family.nil? 
+				if @family.users.empty?
+					@user.roles = "admin"
+				else
+					@user.roles = "child"
+				end
 		else
 			 @family = Fam.new(:title => @user.family)
 			 @family.save
+			 @calendar = Calendar.create!(:title => @user.family, :fam_id => @family.id)
+			 @calendar.createDefaultChores(@calendar)
 			 @user.roles = "admin"
 		end
 		@user.fam_id = @family.id 
-			if @user.findcolors(@family).length > 0
-				@user.color = @user.findcolors(@family).values[0]
-			else
-				@user.color = green
-			end
+		if @user.findcolors(@family).length > 0
+			@user.color = @user.findcolors(@family).values[0]
+		else
+			@user.color = green
+		end
 
 # good code
 #		@families = Fam.find_or_create_by_title(params[:family])
 #		@user = @families.users.build(params[:user])
-#		@user.roles = "admin"
-		
+#		@user.roles = "admin"		
     if @user.save
-			if @hasCalendar == false
-				@calendar = Calendar.create!(:title => @user.family, :user_id => @user.id, :fam_id => @family.id)
-				@calendar.createDefaultChores(@calendar)
-			end
       flash[:notice] = "Account registered!"
       redirect_back_or_default account_url
     else

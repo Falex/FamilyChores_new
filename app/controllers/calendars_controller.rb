@@ -22,12 +22,10 @@ class CalendarsController < ApplicationController
   # GET /calendars/1
   # GET /calendars/1.xml
   def show
-    #@family_id = @user.fam_id
 		@login = @user.login
 		@family = Fam.find(@user.fam_id)
 		@calendar = @family.calendar
 		@entries = @calendar.events;
-		@user = User.find(@calendar.user_id)
 		@users = User.all(:conditions => {:fam_id => @user.fam_id}) # die whole Family
 		
     respond_to do |format|
