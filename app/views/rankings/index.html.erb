@@ -9,11 +9,12 @@
 	</div>
 	<% @rankings.each do |member| %>
 		<div id="member">
-			<h3><%=h member.login %></h3>
-			<% if !member.stars_count.nil? %>
-				<p><%=h member.stars_count %></p>
-				<p><%=h member.entire_stars_count %></p>
-			<% end %>
+			<h3>
+				<%=h member.login %>
+				<% if !member.entire_stars_count.nil? %>
+					<%=h member.entire_stars_count %>
+				<% end %>
+			</h3>
 			<div class = '<%= member.color %>'>
 				<%= render 'shared/profile_image', {:user => member} %>
 			</div>

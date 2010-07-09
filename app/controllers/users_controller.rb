@@ -70,6 +70,7 @@ class UsersController < ApplicationController
 			@user = @current_user
 		end
     if @user.update_attributes(params[:user])
+			@user.fam.update_attributes(params[:family])
       flash[:notice] = "Account updated!"
       redirect_to account_path 
     else

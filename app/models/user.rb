@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   acts_as_authentic
   belongs_to :fam
   has_many :calendars
-  has_many :events, :through => :calendars
+  has_many :events, :dependent => :destroy
   has_many :rewards, :dependent => :destroy
 	validates_presence_of :family
 	validates_presence_of :family_password
