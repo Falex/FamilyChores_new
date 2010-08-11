@@ -9,8 +9,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :chores
   map.resources :icalfiles
 	map.resources :calendars, :has_many => :rankings
-	#map.resources :rewards
-  #map.resources :configurations, :path_prefix => '/calendars/:calendar_id'
 	
 	map.resources :calendars do |calendar|
     calendar.resources :configurations
@@ -28,12 +26,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :calendars, :has_many => :events
   map.resources :calendars, :has_many => :rewards
   map.resource :account, :controller => 'users'
+	 
   map.resources :users
   map.resource :user_session
-	
-	#map.resource :addStar, :controller => 'users'
-  
- 
+
+  #map.resource :chorescalendar, :controller => 'icalfiles'
+	#map.connect ':icalfiles/:index/:id.:format'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

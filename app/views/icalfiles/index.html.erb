@@ -1,8 +1,8 @@
-<%= form_tag ({:action => 'uploadFile'}, 
-                        :multipart => true) %>
-<p><label for="upload_file">Select File</label> : 
-<%= file_field 'upload', 'datafile' %></p>
-<%= submit_tag "Upload" %>
-<%= form_tag %>
+<%-# link_to "Ical", :controller => "icalfiles", :location => "famcalendar.ics", :action => "famcalendar.ics" -%>
+<%= render :file => "public/system/ical/#{@user.fam.id}/famcalendar.ics" -%>
 
-<%= link_to "Ical", :controller => "icalfiles", :location => "famcalendar.ics", :action => "famcalendar.ics" %>
+<% @users.each do |user| %>
+	<%= link_to user.login, "" %>
+<% end %>
+
+<%= link_to "family", "system/ical/#{@user.fam.id}/famcalendar.ics" %>

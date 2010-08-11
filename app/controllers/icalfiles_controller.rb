@@ -1,29 +1,26 @@
 class IcalfilesController < ApplicationController
 
+	before_filter :load_user
+
   def index
     #@chores = Chore.all
-	
-	#my_file = File.new("famcalendar.ics", "w")
-	#my_file.save
-	
+		#my_file = File.new("famcalendar.ics", "w")
+		#my_file.save
+		@events = @user.fam.calendar.events
+		@users = @user.fam.users
+		#render :file => '../../public/system/ical/famcalendar.ics'
 
     respond_to do |format|
-	  #format.ics {render :ics => generate_ics()}
-      format.html # index.html.erb
-	  
-      #format.xml  { render :xml => @icalfiles }
+			generate_ics()
+			format.html # index.html.erb
+			#format.xml  { render :xml => @icalfiles }
     end
   end
   
   def show
-    #@chores = Chore.all
-	
-	#my_file = File.new("famcalendar.ics", "w")
-	#my_file.save
-	
-
+		@events = @user.fam.calendar.events
     respond_to do |format|
-	  format.html # index.html.erb
+	  #format.html # show.html.erb
 	  format.ics {render :ics => generate_ics() }
       
       #format.xml  { render :xml => @icalfiles }
@@ -32,25 +29,31 @@ class IcalfilesController < ApplicationController
   
   def generate_ics
   
-	my_file = File.new("famcalendar.ics", "r+")
-	my_file.write "BEGIN:VCALENDAR" + "\n"
-	
-	my_file.write "METHOD:" + "PUBLISH" + "\n"
-	my_file.write "BEGIN:VEVENT" + "\n"
-	my_file.write "SUMMARY:" + "Staubsaugen" + "- Paul"+ "\n"
-	my_file.write "DTSTART;VALUE=DATE:" + "20100610" + "\n"
-	my_file.write "DTEND;VALUE=DATE:" + "20100611" + "\n"
-	my_file.write "CATEGORIES:Family" + "\n"
-	my_file.write "DESCRIPTION:" + "Paul" + "\n"
-	my_file.write "ATTENDEE;CN=" + "\"Paul\";" + "\n"
-	my_file.write "SEQUENCE:0" + "\n"
-	my_file.write "END:VEVENT" + "\n"
-	my_file.write "END:VCALENDAR" + "\n"
+		@events = @user.fam.calendar.events
+		FileUtils.mkdir_p (RAILS_ROOT + "/public/system/ical/#{@user.fam.id}")
+		my_file = File.new(File.join(RAILS_ROOT, "public/system/ical/#{@user.fam.id}/famcalendar.ics"), "w")
+		my_file.write "BEGIN:VCALENDAR" + "\n"
+		
+		my_file.write "METHOD:" + "PUBLISH" + "\n"
+		@events.each do |event|
+			my_file.write "BEGIN:VEVENT" + "\n"
+			my_file.write "SUMMARY:" + event.chore.title + " " + event.user.login + "\n"
+			my_file.write "DTSTART;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
+			my_file.write "DTEND;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
+			my_file.write "CATEGORIES:Family" + "\n"
+			my_file.write "DESCRIPTION:" + event.description + "\n"
+			my_file.write "ATTENDEE;CN=" + event.user.login + "\n"
+			my_file.write "SEQUENCE:0" + "\n"
+			my_file.write "END:VEVENT" + "\n"
+		end
+		
+		my_file.write "END:VCALENDAR" + "\n"
+		my_file.close
 
-	my_file.write "END:VEVENT" + "\n"
-	my_file.write "END:VCALENDAR"
+		#return my_file
+  end
 	
-	return my_file
-	
+	def load_user
+    @user = @current_user
   end
 end
