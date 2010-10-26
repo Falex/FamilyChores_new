@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+METHOD:PUBLISH<% @calendar.events.each do |event| %>
+BEGIN:VEVENT
+SUMMARY:<%= event.chore.title %> <%= event.user.login %>
+DTSTART;VALUE=DATE:<%= event.start_on.strftime("%Y%m%d") %>
+DTEND;VALUE=DATE:<%= event.start_on.strftime("%Y%m%d") %>
+CATEGORIES:Family
+DESCRIPTION:<%= event.description %>
+ATTENDEE;CN=<%= event.user.login %>
+SEQUENCE:0
+END:VEVENT<% end %>
+END:VCALENDAR

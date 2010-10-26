@@ -1,8 +1,8 @@
 <%-# link_to "Ical", :controller => "icalfiles", :location => "famcalendar.ics", :action => "famcalendar.ics" -%>
-<%= render :file => "public/system/ical/#{@user.fam.id}/famcalendar.ics" -%>
+<%# render :file => "public/system/ical/#{@user.fam.id}/famcalendar.ics" -%>
 
 <% @users.each do |user| %>
 	<%= link_to user.login, "" %>
 <% end %>
 
-<%= link_to "family", "system/ical/#{@user.fam.id}/famcalendar.ics" %>
+<%= link_to "family", "/ical/#{@user.fam.id}/famcalendar.ics" %>

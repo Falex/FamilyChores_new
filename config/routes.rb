@@ -14,8 +14,13 @@ ActionController::Routing::Routes.draw do |map|
     calendar.resources :configurations
   end
 	
+	map.resources :icalfiles, :collection => {:download => :get}  #do |icalfile|
+	#	icalfile.resources :users
+	#end
+	
 	map.resources :calendars do |calendar|
     calendar.resources :rewards
+		calendar.resources :icalfiles
   end
 
   

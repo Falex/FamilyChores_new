@@ -1,6 +1,6 @@
 class IcalfilesController < ApplicationController
 
-	before_filter :load_user
+	before_filter :load_user, :except => [:download]
 
   def index
     #@chores = Chore.all
@@ -18,20 +18,24 @@ class IcalfilesController < ApplicationController
   end
   
   def show
-		@events = @user.fam.calendar.events
-    respond_to do |format|
+		#@events = @user.fam.calendar.events
+   # respond_to do |format|
 	  #format.html # show.html.erb
-	  format.ics {render :ics => generate_ics() }
+	  #format.ics {render :ics => generate_ics() }
       
       #format.xml  { render :xml => @icalfiles }
-    end
+    #end
+		generate_ics
+		#send_data ('ical/1/famcalendar.ics'), :type=>"text/calendar", :disposition => 'inline'
   end
   
   def generate_ics
   
 		@events = @user.fam.calendar.events
-		FileUtils.mkdir_p (RAILS_ROOT + "/public/system/ical/#{@user.fam.id}")
-		my_file = File.new(File.join(RAILS_ROOT, "public/system/ical/#{@user.fam.id}/famcalendar.ics"), "w")
+		#FileUtils.mkdir_p (RAILS_ROOT + "/public/system/ical/#{@user.fam.id}")
+		#my_file = File.new(File.join(RAILS_ROOT, "public/system/ical/#{@user.fam.id}/famcalendar.ics"), "w")
+		FileUtils.mkdir_p(RAILS_ROOT + "/ical/#{@user.fam.id}")
+		my_file = File.new(File.join(RAILS_ROOT, "ical/#{@user.fam.id}/famcalendar.ics"), "w")
 		my_file.write "BEGIN:VCALENDAR" + "\n"
 		
 		my_file.write "METHOD:" + "PUBLISH" + "\n"
@@ -52,6 +56,17 @@ class IcalfilesController < ApplicationController
 
 		#return my_file
   end
+	
+	def download
+		#@user = User.find(params[:family_password])
+		
+		#unless @user.blank
+			#send_file '/ical/1/famcalendar.ics', :type=>"text/calendar", :x_sendfile => true
+		#end
+		generate_ics
+		send_file ('ical/1/famcalendar.ics'), :type=>"text/calendar", :x_sendfile => true
+		
+	end
 	
 	def load_user
     @user = @current_user
