@@ -210,16 +210,19 @@ li #draggable {
 	border:2px solid #800000;
 }
 		
-#calendar_grid #details {
+.items #details {
 	float:left;
 	clear:both;
 	position:relative;
 	left:40;
 }
 
-#calendar_grid {
-	float:left;
+.items {
+	/*float:left;*/
 	margin-left:50px;
+	height:420px; /**/
+	width:600px;
+	/*overflow:auto;*/
 }
 	
 #name_of_day{
@@ -241,6 +244,7 @@ li{
 	
 tbody td{
 	width:82px;
+	min-width:82px;
 	max-width: 82px;
 	max-height: 80px;
 	color: #000000;
@@ -248,6 +252,11 @@ tbody td{
 	background: transparent url(../images/Kalenderfeld_dark.png);
 	background-repeat:no-repeat;
 	overflow:hidden;
+}
+
+/*****/
+tbody{
+	/*background: transparent url(../images/Kalenderfeld_dark.png);*/
 }
 
 

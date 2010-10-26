@@ -1,12 +1,12 @@
 <script type="text/javascript">
 	$(function() {
-		$("tbody").sortable({items: 'td', containment: 'table' });
-		$("td").hoverbox();
+		//$("tbody").sortable({items: 'td', containment: 'table' });
+		/*$("td").hoverbox();*/
 	});
 </script>
 	
 <% content_for(:head) do %>
-<%= javascript_include_tag 'jquery.em', 'jquery.onImagesLoad', 'jquery.mousewheel', 'jScrollPlane' %>
+<%= javascript_include_tag 'jquery.em', 'jquery.onImagesLoad' %>
 
 <%= render :partial => 'effects' %>
 
@@ -52,11 +52,28 @@
 			</li>
 	</div>
 </ul>
-<%= link_to "Ical", icalfiles_path %>
-<%= render :partial => "table" %>
+<%# link_to "Ical", icalfiles_path %>
+<%= link_to "Ical", params.merge(:format => :ics) %>
 
-
+<!--<div id="calendar_container">-->
+<a class="prev browse left">prev</a>
+<div class="scrollable">
+	<%= render :partial => "table" %>
+</div>
+<a class="next browse right">next</a>
 <%
 =begin %>
 <%
 =end %>
+
+<script type="text/javascript">
+$(function() {
+
+	//$('div#calendar_container').jScrollPane();
+	//$('.scroll-pane').jScrollPane({showArrows: true, horizontalGutter: 200, verticalGutter :200 });
+	$(".scrollable").scrollable();
+
+
+
+});
+</script>
