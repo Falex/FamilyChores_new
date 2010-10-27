@@ -224,7 +224,8 @@ li #draggable {
 	width:600px;
 	/*overflow:auto;*/
 }
-	
+
+/*	
 #name_of_day{
 	max-height:30px;
 	font-family:Miriam;
@@ -235,11 +236,11 @@ li #draggable {
 	background-repeat:no-repeat;
 	padding-top:5px;
 	padding-left:5px;
-}
+}*/
 	
 li{
 	margin:1px;
-	padding:5px;
+	/*padding:5px; *//********************************/
 	}
 	
 tbody td{
@@ -257,6 +258,35 @@ tbody td{
 /*****/
 tbody{
 	/*background: transparent url(../images/Kalenderfeld_dark.png);*/
+}
+
+.table{
+	/*background: transparent url(../images/Kalenderfeld_dark.png);*/
+	min-height:450px;
+}
+
+.items ul.calendar_entries {
+	width:88px;
+	max-width:88px;
+	float:left;
+}
+
+.items .calendar_entries ul li{
+	width:82px;
+}
+
+ul.name_of_day li{
+	width:80px;
+	float:left;
+	min-height:30px;
+	font-family:Miriam;
+	font-weight:20px;
+	font-size: 20px;
+	color:white;
+	background: transparent url(../images/Kalendertageaktiv.png);
+	background-repeat:no-repeat;
+	padding-top:5px;
+	padding-left:5px;
 }
 
 

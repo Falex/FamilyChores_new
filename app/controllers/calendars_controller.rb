@@ -139,5 +139,9 @@ class CalendarsController < ApplicationController
 
 		#return my_file
   end
+	
+	def update_position
+	
+	end
   
 end

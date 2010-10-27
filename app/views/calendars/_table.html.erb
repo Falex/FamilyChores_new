@@ -1,28 +1,25 @@
 <div class= "items">
-	<div>
-	<table>
-		<thead>
-			<tr class>
+	<% 4.times do |w| %>
+		<% w > 0 ? d = 1 : d = 0 %>
+		<div>
+			<ul class="name_of_day">
 				<% 7.times  do |x|%>
-						<% time = Time.now.beginning_of_week + x * 86400%>
-						<td id="name_of_day">
-							<%= time.strftime("%a") %>
-						<p class="day"><%= time.strftime("%d") %></p>
-						</td>
+					<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
+					<li>
+						<%= time.strftime("%a") %>
+					<p class="day"><%= time.strftime("%d") %></p>
+					</li>
 				<% end %>
-			</tr>
-		</thead>
-		<tbody>
-		<% usedAlready = {} %>
-		<% 4.times  do |a|%>
-			<tr>
+			</ul>
+			<div class="table">
 			<% 7.times do |x| %>
-				<% time = Time.now.beginning_of_week + x * 86400%>
-					 <td>
-						<% z=0 %>
-						<% @entries.each do |event| %>
-							<div class= "calendar_entry">
-								<% if event.start_on.day == time.day && !usedAlready.has_key?(z) && event.start_on.month == time.month %>
+				<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
+				<ul class="calendar_entries" id="<%= time %>">
+				<li>&nbsp; </li>
+					<% @entries.each do |event| %>
+						<% if event.start_on.day == time.day && event.start_on.month == time.month %>
+							<li class= "calendar_entry">
+								<div class="picture_entry">
 									<!--[if IE]>
 									<span title='<%= event.description %>'>
 									<![endif]-->
@@ -33,92 +30,34 @@
 											<%= render "shared/chore_image", {:chore => event.chore} %>
 										</div>
 									</span>
-							</div>
-							<% if permitted_to? :create, @chore %>
-								<% if event.finished == false %>
-									<div class="rating">
-										<div class="block">
-											<span title="negativ bewerten">
-												<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
-											</span>
-											<span title="positiv bewerten">
-												<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
-											</span>
+								</div>
+								<% if permitted_to? :create, @chore %>
+									<% if event.finished == false %>
+										<div class="rating">
+											<div class="block">
+												<span title="negativ bewerten">
+													<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
+												</span>
+												<span title="positiv bewerten">
+													<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
+												</span>
+											</div>
 										</div>
-									</div>
+									<% end %>
 								<% end %>
-							<% end %>
-							<% usedAlready[z] = true %>
-							<% break %>
-						<% end %>
-						<% z= z+1 %>
-						<% end %>
-					</td>
-				<% end %>
-			</tr>
-		<% end %>
-		</tbody>
-	</table>
-	</div>
-	<div>
-	<table>
-		<thead>
-			<tr class>
-				<% 7.times  do |x|%>
-						<% time = Time.now.beginning_of_week + (x+8) * 86400%>
-						<td id="name_of_day">
-							<%= time.strftime("%a") %>
-						<p class="day"><%= time.strftime("%d") %></p>
-						</td>
-				<% end %>
-			</tr>
-		</thead>
-		<tbody>
-		<% usedAlready = {} %>
-		<% 4.times  do |a|%>
-			<tr>
-			<% 7.times do |x| %>
-				<% time = Time.now.beginning_of_week + (x+8) * 86400%>
-					 <td>
-						<% z=0 %>
-						<% @entries.each do |event| %>
-							<div class= "calendar_entry">
-								<% if event.start_on.day == time.day && !usedAlready.has_key?(z) && event.start_on.month == time.month %>
-									<!--[if IE]>
-									<span title='<%= event.description %>'>
-									<![endif]-->
-									<![if !IE]>
-									<span class="tip" onmouseover="tooltip('<%=event.description %>');" onmouseout="exit();">
-									<![endif]>
-										<div class = '<%= event.user.color %>'>
-											<%= render "shared/chore_image", {:chore => event.chore} %>
-										</div>
-									</span>
-							</div>
-							<% if permitted_to? :create, @chore %>
-								<% if event.finished == false %>
-									<div class="rating">
-										<div class="block">
-											<span title="negativ bewerten">
-												<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
-											</span>
-											<span title="positiv bewerten">
-												<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
-											</span>
-										</div>
-									</div>
-								<% end %>
-							<% end %>
-							<% usedAlready[z] = true %>
-							<% break %>
-						<% end %>
-						<% z= z+1 %>
-						<% end %>
-					</td>
-				<% end %>
-			</tr>
-		<% end %>
-		</tbody>
-	</table>
-	</div>
+							</li>
+						<% end %>	
+					<% end %>
+				</ul>
+			<% end %>
+			</div>
+		</div>
+	<% end %>
 </div>
+
+<script type="text/javascript">
+$(function() {
+	$(".calendar_entries").sortable({ connectWith: ".calendar_entries"
+																		});
+});
+</script>
