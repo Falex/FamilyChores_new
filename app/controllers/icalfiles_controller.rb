@@ -63,8 +63,9 @@ class IcalfilesController < ApplicationController
 		#unless @user.blank
 			#send_file '/ical/1/famcalendar.ics', :type=>"text/calendar", :x_sendfile => true
 		#end
-		generate_ics
-		send_file ('ical/1/famcalendar.ics'), :type=>"text/calendar", :x_sendfile => true
+		#generate_ics
+		#render  "#{RAILS_ROOT}/ical/1/famcalendar.ics"
+		render :file => "#{RAILS_ROOT}/ical/1/famcalendar.ics"
 		
 	end
 	

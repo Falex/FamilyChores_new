@@ -4,7 +4,7 @@
 		<thead>
 			<tr class>
 				<% 7.times  do |x|%>
-						<% time = Time.now.beginning_of_week + x * 86400%>
+						<% time = Time.now.beginning_of_week + (x+8) * 86400%>
 						<td id="name_of_day">
 							<%= time.strftime("%a") %>
 						<p class="day"><%= time.strftime("%d") %></p>
@@ -17,7 +17,7 @@
 		<% 4.times  do |a|%>
 			<tr>
 			<% 7.times do |x| %>
-				<% time = Time.now.beginning_of_week + x * 86400%>
+				<% time = Time.now.beginning_of_week + (x+8) * 86400%>
 					 <td>
 						<% z=0 %>
 						<% @entries.each do |event| %>
@@ -65,7 +65,7 @@
 		<thead>
 			<tr class>
 				<% 7.times  do |x|%>
-						<% time = Time.now.beginning_of_week + (x+8) * 86400%>
+						<% time = Time.now.beginning_of_week + x * 86400%>
 						<td id="name_of_day">
 							<%= time.strftime("%a") %>
 						<p class="day"><%= time.strftime("%d") %></p>
@@ -78,7 +78,7 @@
 		<% 4.times  do |a|%>
 			<tr>
 			<% 7.times do |x| %>
-				<% time = Time.now.beginning_of_week + (x+8) * 86400%>
+				<% time = Time.now.beginning_of_week + x * 86400%>
 					 <td>
 						<% z=0 %>
 						<% @entries.each do |event| %>
