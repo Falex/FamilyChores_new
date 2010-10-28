@@ -23,9 +23,11 @@ class IcalfilesController < ApplicationController
 	def download
 		@user = User.first(:conditions => {:id => params[:user_id], :password_salt => params[:to]})
 		#@user = User.find(params[:family_password])
-		#@family = Fam.first(:conditions => {:title => params[:title], :token => params[:to]})
-		unless @user.blank?
+		@family = Fam.first(:conditions => {:token => params[:to]})
+		if !@user.blank?
 			render :file => "#{RAILS_ROOT}/ical/#{@user.fam.id}/#{@user.login}_calendar.ics"
+		elsif !@family.blank?
+			render :file => "#{RAILS_ROOT}/ical/#{@family.id}/famcalendar.ics"
 		else
 			render :nothing => true
 		end

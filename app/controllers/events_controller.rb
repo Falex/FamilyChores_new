@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :load_calendar
   #before_filter :load_user
-  filter_resource_access
+  #filter_resource_access
   
   # GET /events
   # GET /events.xml
@@ -101,28 +101,39 @@ class EventsController < ApplicationController
   end
 	
 	def sort
-		@events = Event.all
-		@events.each do |event|
-			event.start_on = params['.calendar_entry']
-			event.save
+		#@events = Event.all
+		#@events.each do |event|
+		#	event.start_on = params['.calendar_entry']
+		#	event.save
+		#end
+		unless params[:event].blank?
+			params[:event].each_index do |i|
+				#logger.info "ID: #{params[:event][i]}" #### wichitg !!!!!!!!!!!!!!
+				event = Event.find(params[:event][i].to_i)
+				#event.update_attribute(:position, i)
+				date = Time.at(params[:date].gsub("calendar_entries_", "").to_i)
+				event.update_attribute(:start_on, date)
+			end
 		end
 		render :nothing => true
 	end
 	
 	def ics_for_all
 		@current_user.fam.users.each do |user|
-			generate_ics(events = user.events, user)
+			generate_ics(events = user.events, user, false)
 		end
+		generate_ics(events = @current_user.fam.calendar.events, @current_user, true)
 	end
 	
-	def generate_ics(events, user)
+	def generate_ics(events, user, family)
 		@fam = Fam.all
 		@events = events #@user.fam.calendar.events
-		#FileUtils.mkdir_p (RAILS_ROOT + "/public/system/ical/#{@user.fam.id}")
-		#my_file = File.new(File.join(RAILS_ROOT, "public/system/ical/#{@user.fam.id}/famcalendar.ics"), "w")
 		FileUtils.mkdir_p(RAILS_ROOT + "/ical/#{user.fam.id}")
-		my_file = File.new(File.join(RAILS_ROOT, "ical/#{user.fam.id}/#{user.login}_calendar.ics"), "w")
-		#my_file = File.new(File.join(RAILS_ROOT, "ical/1/_calendar.ics"), "w")
+		if family == true
+			my_file = File.new(File.join(RAILS_ROOT, "ical/#{user.fam.id}/famcalendar.ics"), "w")
+		else
+			my_file = File.new(File.join(RAILS_ROOT, "ical/#{user.fam.id}/#{user.login}_calendar.ics"), "w")
+		end
 		my_file.write "BEGIN:VCALENDAR" + "\n"
 		
 		my_file.write "METHOD:" + "PUBLISH" + "\n"

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 				end
 		else
 			 @family = Fam.new(:title => @user.family)
-			 @family.token = rand(36*15).to_s(36)
+			 @family.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").gsub(/=+$/,"")
 			 @family.save
 			 @calendar = Calendar.create!(:title => @user.family, :fam_id => @family.id)
 			 @calendar.createDefaultChores(@calendar)

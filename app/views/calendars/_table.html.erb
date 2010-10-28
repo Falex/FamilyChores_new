@@ -12,13 +12,15 @@
 				<% end %>
 			</ul>
 			<div class="table">
+			<ul class="days">
 			<% 7.times do |x| %>
 				<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
-				<ul class="calendar_entries" id="<%= time %>">
-				<li>&nbsp; </li>
+				<li id="day_<%= time.to_i %>">
+				<ul class="calendar_entries" id="calendar_entries_<%= time.to_i %>">
+				<!--<li>&nbsp; </li>-->
 					<% @entries.each do |event| %>
 						<% if event.start_on.day == time.day && event.start_on.month == time.month %>
-							<li class= "calendar_entry" id="<%= event.id%>">
+							<li class= "calendar_entry" id="event_<%= event.id%>">
 								<div class="picture_entry">
 									<!--[if IE]>
 									<span title='<%= event.description %>'>
@@ -49,27 +51,30 @@
 						<% end %>	
 					<% end %>
 				</ul>
+				</li>
 			<% end %>
+			</ul>
 			</div>
 		</div>
 	<% end %>
 </div>
 
-<script type="text/javascript">
-$(function(){
-	$(".calendar_entries").sortable({ 
-		connectWith: ".calendar_entries",
-		update: function(){
-			$.ajax({
-				type: 'post',
-				data: $('.calendar_entries').sortable('serialize'),
-				data: $('.calendar_entry').,
-				dataType: 'script',
-				url: '<%= sort_calendar_events_path(@calendar) %>'})
-			}
+<% if permitted_to? :sort, :events %>
+	<script type="text/javascript">
+	$(function(){
+		$(".calendar_entries").sortable({ 
+			connectWith: ".calendar_entries",
+			update: function(){
+				$.ajax({
+					type: 'post',
+					data: $(this).sortable('serialize') + "&date=" + $(this).attr("id"),
+					dataType: 'script',
+					url: '<%= sort_calendar_events_path(@calendar) %>'})
+				}
+		});
 	});
-});
-</script>
+	</script>
+<% end %>
 
 
 

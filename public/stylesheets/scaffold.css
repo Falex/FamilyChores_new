@@ -269,15 +269,37 @@ tbody{
 	width:88px;
 	max-width:88px;
 	float:left;
+	padding-bottom:10px;
+	padding-top:10px;
+	min-height:40px;
+}
+
+.items li{
+	float:left;
+	width:82px;
+}
+
+.days li{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.days li li{
+	padding:0;
 }
 
 .items .calendar_entries ul li{
 	width:82px;
 }
 
+ul.name_of_day{
+	height:45px;
+}
+
 ul.name_of_day li{
 	width:80px;
 	float:left;
+	height:45px;
 	min-height:30px;
 	font-family:Miriam;
 	font-weight:20px;
@@ -287,6 +309,7 @@ ul.name_of_day li{
 	background-repeat:no-repeat;
 	padding-top:5px;
 	padding-left:5px;
+	margin-bottom:0;
 }
 
 
