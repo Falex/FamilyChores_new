@@ -18,7 +18,7 @@
 				<li>&nbsp; </li>
 					<% @entries.each do |event| %>
 						<% if event.start_on.day == time.day && event.start_on.month == time.month %>
-							<li class= "calendar_entry">
+							<li class= "calendar_entry" id="<%= event.id%>">
 								<div class="picture_entry">
 									<!--[if IE]>
 									<span title='<%= event.description %>'>
@@ -56,8 +56,22 @@
 </div>
 
 <script type="text/javascript">
-$(function() {
-	$(".calendar_entries").sortable({ connectWith: ".calendar_entries"
-																		});
+$(function(){
+	$(".calendar_entries").sortable({ 
+		connectWith: ".calendar_entries",
+		update: function(){
+			$.ajax({
+				type: 'post',
+				data: $('.calendar_entries').sortable('serialize'),
+				data: $('.calendar_entry').,
+				dataType: 'script',
+				url: '<%= sort_calendar_events_path(@calendar) %>'})
+			}
+	});
 });
 </script>
+
+
+
+
+

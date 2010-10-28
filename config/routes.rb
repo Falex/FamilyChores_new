@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :families
   map.resources :calendars, :has_many => :configurations #, :has_many => :users
   map.resources :chores
-  #map.resources :icalfiles
+  
 	map.resources :calendars, :has_many => :rankings
 	
 	map.resources :calendars do |calendar|
@@ -17,12 +17,16 @@ ActionController::Routing::Routes.draw do |map|
 	#map.resources :icalfiles #, :collection => {:download => :get}  #do |icalfile|
 	#	icalfile.resources :users
 	#end
+	map.resources :users do |user|
+		user.resources :icalfiles, :collection => {:download => :get}
+	end
+	
 	map.resources :icalfiles, :collection => {:download => :get}
- 
 	
 	map.resources :calendars do |calendar|
     calendar.resources :rewards
 		#calendar.resources :icalfiles
+		calendar.resources :events, :collection => {:sort => :post}
   end
 
   
@@ -36,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
 	 
   map.resources :users
   map.resource :user_session
+	
+	
 
   #map.resource :chorescalendar, :controller => 'icalfiles'
 	#map.connect ':icalfiles/:index/:id.:format'

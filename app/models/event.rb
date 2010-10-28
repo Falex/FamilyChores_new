@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+	#acts_as_list
   belongs_to :calendar
   belongs_to :user
   belongs_to :chore, :dependent => :destroy

@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "will_paginate", :version => '~>2.3.12', :source => "http://gemcutter.org"
   config.gem "cancan"
   config.gem "declarative_authorization", :source => "http://gemcutter.org"
+	config.gem "acts_as_list"
 
 
   # Only load the plugins named here, in the order given (default is alphabetical).

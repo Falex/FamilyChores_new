@@ -52,7 +52,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         flash[:notice] = 'Event was successfully created.'
-    
+				ics_for_all #######
 				format.html { redirect_to(@calendar) }
 				format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
@@ -70,6 +70,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'Event was successfully updated.'
+				ics_for_all ########
         format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
         format.xml  { head :ok }
       else
@@ -84,7 +85,7 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-
+		ics_for_all #########
     respond_to do |format|
 			format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
       format.xml  { head :ok }
@@ -98,5 +99,46 @@ class EventsController < ApplicationController
   def load_user
     @user = @current_user
   end
-  
+	
+	def sort
+		@events = Event.all
+		@events.each do |event|
+			event.start_on = params['.calendar_entry']
+			event.save
+		end
+		render :nothing => true
+	end
+	
+	def ics_for_all
+		@current_user.fam.users.each do |user|
+			generate_ics(events = user.events, user)
+		end
+	end
+	
+	def generate_ics(events, user)
+		@fam = Fam.all
+		@events = events #@user.fam.calendar.events
+		#FileUtils.mkdir_p (RAILS_ROOT + "/public/system/ical/#{@user.fam.id}")
+		#my_file = File.new(File.join(RAILS_ROOT, "public/system/ical/#{@user.fam.id}/famcalendar.ics"), "w")
+		FileUtils.mkdir_p(RAILS_ROOT + "/ical/#{user.fam.id}")
+		my_file = File.new(File.join(RAILS_ROOT, "ical/#{user.fam.id}/#{user.login}_calendar.ics"), "w")
+		#my_file = File.new(File.join(RAILS_ROOT, "ical/1/_calendar.ics"), "w")
+		my_file.write "BEGIN:VCALENDAR" + "\n"
+		
+		my_file.write "METHOD:" + "PUBLISH" + "\n"
+		@events.each do |event|
+			my_file.write "BEGIN:VEVENT" + "\n"
+			my_file.write "SUMMARY:" + event.chore.title + " " + event.user.login + "\n"
+			my_file.write "DTSTART;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
+			my_file.write "DTEND;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
+			my_file.write "CATEGORIES:Family" + "\n"
+			my_file.write "DESCRIPTION:" + event.description + "\n"
+			my_file.write "ATTENDEE;CN=" + event.user.login + "\n"
+			my_file.write "SEQUENCE:0" + "\n"
+			my_file.write "END:VEVENT" + "\n"
+		end
+		
+		my_file.write "END:VCALENDAR" + "\n"
+		my_file.close
+  end
 end
