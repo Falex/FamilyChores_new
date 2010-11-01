@@ -1,12 +1,17 @@
-<%-# link_to "Ical", :controller => "icalfiles", :location => "famcalendar.ics", :action => "famcalendar.ics" -%>
-<%# render :file => "public/system/ical/#{@user.fam.id}/famcalendar.ics" -%>
-
 <% @users.each do |user| %>
 	<h3><%= user.login %></h3>
-	<%= link_to "Link zum Abonnieren und Download des Kalenders:", "http://localhost:3000/users/#{user.id}/icalfiles/download?to=#{user.password_salt}" %>
-	http://localhost:3000/users/<%= user.id%>/icalfiles/download?to=<%=user.password_salt%><br/>
+	<% unless user.events.blank? %>
+		<%= link_to "Link zum Abonnieren und Download des Kalenders:", "http://localhost:3000/users/#{user.id}/icalfiles/download?to=#{user.password_salt}" %>
+		http://localhost:3000/users/<%= user.id%>/icalfiles/download?to=<%=user.password_salt%><br/>
+	<% else %>
+		Es wurden keine Einträge im Kalender zu dieser Person gefunden
+	<% end %>
 <% end %>
 
 <h3>family</h3>
-<%= link_to "Link zum Abonnieren und Download des Kalenders:", "http://localhost:3000/icalfiles/download?to=#{@users.first.fam.token}" %>
-http://localhost:3000/icalfiles/download?to=<%=@users.first.fam.token%><br/>
+<% unless @users.first.fam.calendar.events.blank? %>
+	<%= link_to "Link zum Abonnieren und Download des Kalenders:", "http://localhost:3000/icalfiles/download?to=#{@users.first.fam.token}" %>
+	http://localhost:3000/icalfiles/download?to=<%=@users.first.fam.token%><br/>
+<% else %>
+	Es wurden keine Einträge im Kalender gefunden
+<% end %>

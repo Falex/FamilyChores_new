@@ -101,11 +101,6 @@ class EventsController < ApplicationController
   end
 	
 	def sort
-		#@events = Event.all
-		#@events.each do |event|
-		#	event.start_on = params['.calendar_entry']
-		#	event.save
-		#end
 		unless params[:event].blank?
 			params[:event].each_index do |i|
 				#logger.info "ID: #{params[:event][i]}" #### wichitg !!!!!!!!!!!!!!
@@ -114,6 +109,7 @@ class EventsController < ApplicationController
 				date = Time.at(params[:date].gsub("calendar_entries_", "").to_i)
 				event.update_attribute(:start_on, date)
 			end
+			ics_for_all
 		end
 		render :nothing => true
 	end
@@ -141,7 +137,7 @@ class EventsController < ApplicationController
 			my_file.write "BEGIN:VEVENT" + "\n"
 			my_file.write "SUMMARY:" + event.chore.title + " " + event.user.login + "\n"
 			my_file.write "DTSTART;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
-			my_file.write "DTEND;VALUE=DATE:" + event.start_on.strftime("%Y%m%d") + "\n"
+			my_file.write "DTEND;VALUE=DATE:" + (event.start_on + 1).strftime("%Y%m%d") + "\n"
 			my_file.write "CATEGORIES:Family" + "\n"
 			my_file.write "DESCRIPTION:" + event.description + "\n"
 			my_file.write "ATTENDEE;CN=" + event.user.login + "\n"

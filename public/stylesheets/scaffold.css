@@ -200,6 +200,10 @@ li {
 	z-index:4;
 }
 
+.calendar_entry{
+	height:78px;
+}
+
 .calendar_entry img{
 	width:60px;
 	height:60px;
@@ -270,13 +274,18 @@ tbody{
 	max-width:88px;
 	float:left;
 	padding-bottom:10px;
-	padding-top:10px;
-	min-height:40px;
+	/*padding-top:10px;*/
+	/*min-height:40px;*/
+	/*margin-top:-34px;*/
+	background: transparent url(../images/Kalenderfeld_dark.png);
+	background-repeat:repeat-y;
+	min-height:308px;
+	max-height:308px;
 }
 
 .items li{
 	float:left;
-	width:82px;
+	width:86px;
 }
 
 .days li{
@@ -290,6 +299,7 @@ tbody{
 
 .items .calendar_entries ul li{
 	width:82px;
+	height:50px;
 }
 
 ul.name_of_day{
@@ -305,13 +315,16 @@ ul.name_of_day li{
 	font-weight:20px;
 	font-size: 20px;
 	color:white;
-	background: transparent url(../images/Kalendertageaktiv.png);
+	background: transparent url(../images/Kalendertageinaktiv.png);
 	background-repeat:no-repeat;
 	padding-top:5px;
 	padding-left:5px;
 	margin-bottom:0;
 }
 
+ul.name_of_day .active{
+	background: transparent url(../images/Kalendertageaktiv.png);
+}
 
 .nav ul{
 	/*float:left;*/

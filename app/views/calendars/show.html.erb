@@ -52,7 +52,9 @@
 			</li>
 	</div>
 </ul>
-<%= link_to "Alle Ical Kalender zum Abbonieren", icalfiles_path %> |
+<% unless @calendar.events.empty? %>
+	<%= link_to "Alle Ical Kalender zum Abbonieren", icalfiles_path %> |
+<% end %>
 <%= link_to "Ical Download des Kalenders", params.merge(:format => :ics) %>
 
 <!--<div id="calendar_container">-->

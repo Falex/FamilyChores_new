@@ -5,7 +5,7 @@
 			<ul class="name_of_day">
 				<% 7.times  do |x|%>
 					<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
-					<li>
+					<li class="<% if time.day == Time.now.day %>active<% end %>">
 						<%= time.strftime("%a") %>
 					<p class="day"><%= time.strftime("%d") %></p>
 					</li>
@@ -23,10 +23,10 @@
 							<li class= "calendar_entry" id="event_<%= event.id%>">
 								<div class="picture_entry">
 									<!--[if IE]>
-									<span title='<%= event.description %>'>
+									<span title='<%=event.chore.title %> (<%= event.description %>)'>
 									<![endif]-->
 									<![if !IE]>
-									<span class="tip" onmouseover="tooltip('<%=event.description %>');" onmouseout="exit();">
+									<span class="tip" onmouseover="tooltip('<%=event.chore.title %> (<%=event.description %>)');" onmouseout="exit();">
 									<![endif]>
 										<div class = '<%= event.user.color %>'>
 											<%= render "shared/chore_image", {:chore => event.chore} %>
@@ -59,7 +59,7 @@
 	<% end %>
 </div>
 
-<% if permitted_to? :sort, :events %>
+
 	<script type="text/javascript">
 	$(function(){
 		$(".calendar_entries").sortable({ 
@@ -74,7 +74,7 @@
 		});
 	});
 	</script>
-<% end %>
+
 
 
 
