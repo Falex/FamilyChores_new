@@ -87,7 +87,7 @@ class EventsController < ApplicationController
     @event.destroy
 		ics_for_all #########
     respond_to do |format|
-			format.html { redirect_to calendar_configurations_path(params[:calendar_id]) }
+			format.html { redirect_to(:back) }
       format.xml  { head :ok }
     end
   end
@@ -140,7 +140,7 @@ class EventsController < ApplicationController
 			my_file.write "DTEND;VALUE=DATE:" + (event.start_on + 1).strftime("%Y%m%d") + "\n"
 			my_file.write "CATEGORIES:Family" + "\n"
 			my_file.write "DESCRIPTION:" + event.description + "\n"
-			my_file.write "ATTENDEE;CN=" + event.user.login + "\n"
+			my_file.write "ATTENDEE;CN=" + event.user.email + "\n"
 			my_file.write "SEQUENCE:0" + "\n"
 			my_file.write "END:VEVENT" + "\n"
 		end

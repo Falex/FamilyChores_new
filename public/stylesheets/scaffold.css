@@ -16,7 +16,7 @@ body {
 	width:800px;
 }
 
-body, p, ol, ul, td {
+body, p, ol, ul{
   font-family: arial, verdana, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
@@ -148,10 +148,6 @@ div label {
 	color: black;
 }
 
-td a{
-
-}
-
 #details {
  		  
 }
@@ -246,7 +242,8 @@ li{
 	margin:1px;
 	/*padding:5px; *//********************************/
 	}
-	
+
+/*
 tbody td{
 	width:82px;
 	min-width:82px;
@@ -257,6 +254,19 @@ tbody td{
 	background: transparent url(../images/Kalenderfeld_dark.png);
 	background-repeat:no-repeat;
 	overflow:hidden;
+}*/
+
+td{
+	border:solid black 1px;
+	padding:3px;
+}
+
+td a:hover{
+	color:orange;
+}
+
+table{
+	border-collapse: collapse;
 }
 
 /*****/
@@ -756,12 +766,12 @@ input #chore_image{
 
 
 .configurations{
-	background: url(../images/Profil/Datenfeld_mitte.png);
+	background: url(../images/Profil/Datenfeld_mitte_breit.png);
 	background-repeat:repeat-y;
 	position:relative;
 	left: 180px;
 	top: -300px;
-	width: 380px;
+	width: 580px;
 	overflow-y:auto;
 	overflow-x:hidden;
 	max-height:580px;
@@ -770,10 +780,11 @@ input #chore_image{
 
 
 
-.events_conf{
+.events_conf, .chores_conf{
 	margin-left:20px;
 	padding:10px;
 }
+
 
 .profile_data{
 	width:400px;
@@ -902,4 +913,25 @@ p.edit_account a{
 	float:right;
 	position:absolute;
 	top:10px;
+}
+
+.edit_destroy_event img{
+	border:none;
+	height:16px;
+	width:16px;
+	z-index:20;
+}
+
+.edit_destroy_event a{
+	height:16px;
+	width:16px;
+} 
+
+.edit_destroy_event{
+	position:relative;
+	left:70px;
+	height:1px;
+	width:16px;
+	max-width:16px;
+	display:inline;
 }

@@ -1,17 +1,29 @@
 ﻿<h2>Zugeteilte Aufgaben</h2>
 
 <%= link_to 'New event', new_calendar_event_path(@calendar) %>
-
-<% for event in @events %>
-  <p>
-		<%= render "shared/chore_image", {:chore => event.chore} %> <br />
-		Titel: <%=h event.chore.title %> <br />
-		Beschreibung: <%=h short(event.description) %><br />
-		am: <%= event.start_on.strftime('%d.%m.%Y') %><br />
-		muss erledigt werden von: <%=h event.user.login %>
-	</p>
-  <p>
-    <%= link_to 'Bearbeiten', [:edit, @calendar, event] %> 
-		<%= link_to 'Löschen', [@calendar, event], :confirm => 'Are you sure?', :method => :delete %>
-  </p>
-<% end %>
+<table id="myTable" class="tablesorter">
+	<thead> 
+		<tr> 
+				<th>Chore</th> 
+				<th>Titel</th> 
+				<th>Beschreibung</th> 
+				<th>Datum</th> 
+				<th>User</th>
+				<th></th>
+				<th></th>
+		</tr> 
+	</thead> 
+	<tbody> 
+		<% for event in @events %>
+			<tr>
+				<td><%= render "shared/chore_image", {:chore => event.chore} %></td>
+				<td><%=h event.chore.title %></td>
+				<td><%=h short(event.description) %></td>
+				<td><%= event.start_on.strftime('%d.%m.%Y') %></td>
+				<td><%=h event.user.login %></td>
+				<td><%= link_to 'Bearbeiten', [:edit, @calendar, event] %></td>
+				<td><%= link_to 'Löschen', [@calendar, event], :confirm => 'Are you sure?', :method => :delete %></td>
+			</tr>
+		<% end %>
+	<tbody> 
+</table>

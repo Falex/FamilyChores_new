@@ -4,7 +4,7 @@
 		<div>
 			<ul class="name_of_day">
 				<% 7.times  do |x|%>
-					<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
+					<% time = Time.now.beginning_of_week + (x + w*7) * 86400%>
 					<li class="<% if time.day == Time.now.day %>active<% end %>">
 						<%= time.strftime("%a") %>
 					<p class="day"><%= time.strftime("%d") %></p>
@@ -14,13 +14,19 @@
 			<div class="table">
 			<ul class="days">
 			<% 7.times do |x| %>
-				<% time = Time.now.beginning_of_week + (x + w*7 + d) * 86400%>
+				<% time = Time.now.beginning_of_week + (x + w*7) * 86400%>
 				<li id="day_<%= time.to_i %>">
 				<ul class="calendar_entries" id="calendar_entries_<%= time.to_i %>">
 				<!--<li>&nbsp; </li>-->
 					<% @entries.each do |event| %>
 						<% if event.start_on.day == time.day && event.start_on.month == time.month %>
 							<li class= "calendar_entry" id="event_<%= event.id%>">
+								<div class="edit_destroy_event">
+									<%# link_to image_tag("../images/Kalender/pencil_icon.png"), [:edit, @calendar, event] %>
+									<% if permitted_to? :destroy, event %>
+										<%= link_to image_tag("../images/Kalender/delete_icon.png"), [@calendar, event], :confirm => 'Are you sure?', :method => :delete %>
+									<% end %>
+								</div>
 								<div class="picture_entry">
 									<!--[if IE]>
 									<span title='<%=event.chore.title %> (<%= event.description %>)'>
@@ -59,7 +65,7 @@
 	<% end %>
 </div>
 
-
+<% if permitted_to? :edit, @event %>
 	<script type="text/javascript">
 	$(function(){
 		$(".calendar_entries").sortable({ 
@@ -74,6 +80,7 @@
 		});
 	});
 	</script>
+<% end %>
 
 
 

@@ -1,11 +1,23 @@
-﻿<h1>Listing chores</h1>
-
+﻿<h2>Listing chores</h2>
 <%= link_to 'New chore', new_calendar_chore_path(@calendar) %>
-<% for chore in @chores %>
-  <h3><%=h chore.title %></h3>
-  <%= render "shared/chore_image", {:chore => chore} %>
-  <p>
-    <%= link_to 'Bearbeiten', [:edit, @calendar, chore] %> |
-		<%= link_to 'Löschen', [@calendar, chore], :confirm => 'Are you sure?', :method => :delete %>
-  </p>
-<% end %>
+<table id="myTable3" class="tablesorter">
+	<thead> 
+		<tr> 
+				<th>Titel</th> 
+				<th>Bild</th>
+				<th>erstellt am:</th>
+				<th></th> 
+				<th></th> 
+		</tr> 
+	</thead> 
+	<tbody> 
+		<% for chore in @chores %>
+			<tr>
+			<td><h3><%=h chore.title %></h3></td>
+			<td><%= render "shared/chore_image", {:chore => chore} %></td>
+			<td><%= link_to 'Bearbeiten', [:edit, @calendar, chore] %></td>
+			<td><%= link_to 'Löschen', [@calendar, chore], :confirm => 'Are you sure?', :method => :delete %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

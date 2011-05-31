@@ -6,7 +6,7 @@ DTSTART;VALUE=DATE:<%= event.start_on.strftime("%Y%m%d") %>
 DTEND;VALUE=DATE:<%= (event.start_on + 1).strftime("%Y%m%d") %>
 CATEGORIES:Family
 DESCRIPTION:<%= event.description %>
-ATTENDEE;CN=<%= event.user.login %>
+ATTENDEE;CN=<%= event.user.email %>
 SEQUENCE:0
 END:VEVENT<% end %>
 END:VCALENDAR

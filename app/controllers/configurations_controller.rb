@@ -7,9 +7,9 @@ class ConfigurationsController < ApplicationController
   def index
     @users = User.all(:conditions => {:fam_id => @user.fam_id})
 	  calendar = Calendar.first(:conditions => {:fam_id => @user.fam_id})
-		@rewards = Reward.all(:conditions => {:calendar_id => calendar.id})
-		@events = Event.all(:conditions => {:calendar_id => calendar.id})
-		@chores = Chore.all(:conditions => {:calendar_id => calendar.id})
+		@rewards = Reward.all(:conditions => {:calendar_id => calendar.id}, :order => "created_at DESC")
+		@events = Event.all(:conditions => {:calendar_id => calendar.id}, :order => "start_on DESC")
+		@chores = Chore.all(:conditions => {:calendar_id => calendar.id}, :order => "created_at DESC")
 		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
 		@points = points.sort
 		

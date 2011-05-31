@@ -7,9 +7,13 @@
 	$(".rating").hide();
 	$(".chores").hide();
 	$(".events").hide();
+	$(".edit_destroy_event").hide();
 	
 	//$("div#calendar_grid").scrollable();
 	
+	$("div.picture_entry").click(function(){
+		$(this).toggleClass("active").prev().slideToggle("slow");
+	});
 
 	//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
 	$("div.trigger").click(function(){

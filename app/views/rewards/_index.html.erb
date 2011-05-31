@@ -1,18 +1,26 @@
-﻿<h1>Belohnungen</h1>
-
-<% for reward in @rewards %>
-  <p>
-    <%=h reward.title %>
-  </p>
-	<p>
-    User: <%=h reward.user.login %>
-  </p>
-  <p>
-    points: <%=h reward.points %>
-  </p>
-	<%= link_to 'Bearbeiten', [:edit, @calendar, reward] %>
-	<%= link_to 'Löschen', [@calendar, reward], :confirm => 'Are you sure?', :method => :delete %>
-  
-<% end %>
+﻿
+<table id="myTable2" class="tablesorter">
+	<thead> 
+		<tr> 
+				<th>Belohnung</th> 
+				<th>User</th> 
+				<th>Punkte</th> 
+				<th>erstellt am</th> 
+				<th></th>
+				<th></th>
+		</tr> 
+	</thead> 
+	<tbody> 
+		<% for reward in @rewards %>
+			<tr>
+				<td><%=h reward.title %></td>
+				<td><%=h reward.user.login %></td>
+				<td><%=h reward.points %></td>
+				<td><%= link_to 'Bearbeiten', [:edit, @calendar, reward] %></td>
+				<td><%= link_to 'Löschen', [@calendar, reward], :confirm => 'Are you sure?', :method => :delete %></td>
+			<tr>
+		<% end %>
+	<tbody> 
+</table>
 
 
