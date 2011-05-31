@@ -28,6 +28,7 @@ config.action_mailer.delivery_method = :test
 # config.active_record.schema_format = :sql
 
 config.gem 'machinist'
-config.gem 'faker'
+config.gem 'faker', :version => '0.3.1'
 config.gem 'webrat'
 config.gem 'shoulda'
+config.gem 'factory_girl', :version => '1.2.4'

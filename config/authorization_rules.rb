@@ -12,6 +12,7 @@ authorization do
 		#has_permission_on :events, :to => [:sort]
 	  has_permission_on [:events, :calendars, :chores], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
 		has_permission_on :users, :to => [:addStar, :addCloud]
+		has_permission_on :rewards, :to => [:new, :create, :edit, :update, :destroy]
 	end
 	
 	role :admin do

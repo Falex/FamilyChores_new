@@ -1,5 +1,6 @@
 class RewardsController < ApplicationController
   before_filter :load_user
+	filter_resource_access
 	#before_filter :load_calendar
   # GET /rewards
   # GET /rewards.xml
@@ -42,7 +43,7 @@ class RewardsController < ApplicationController
   # GET /rewards/1/edit
   def edit
 		@family = Fam.find(@user.fam_id)
-		@calendar = @family.users[0].calendars.first
+		@calendar = @family.calendar
     @reward = Reward.find(params[:id])
 		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
 		@points = points.sort
