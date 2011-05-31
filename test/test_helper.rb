@@ -4,6 +4,7 @@ require 'test_help'
 require "authlogic/test_case"
 require 'factory_girl'
 require "declarative_authorization/maintenance"
+require 'mocha'
 include Authlogic::TestCase
 
 class ActiveSupport::TestCase
