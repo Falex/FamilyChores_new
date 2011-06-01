@@ -21,6 +21,12 @@ Factory.define :reward do |r|
 	r.finished 0
 end
 
+Factory.define :event do |e|
+	e.description "im Wohnzimmer"
+	e.finished 0
+	e.start_on Date.today
+end
+
 #Factory.define :video do |v|
 #	v.name "TestName"
 #	v.beschreibung "Test Beschreibung"

@@ -32,4 +32,4 @@ config.gem 'faker', :version => '0.3.1'
 config.gem 'webrat'
 config.gem 'shoulda'
 config.gem 'factory_girl', :version => '1.2.4'
-config.gem 'mocha', :require => false
+config.gem 'mocha', :require => false, :version => '0.9.9'

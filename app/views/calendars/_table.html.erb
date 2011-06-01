@@ -44,7 +44,7 @@
 										<div class="rating">
 											<div class="block">
 												<span title="negativ bewerten">
-													<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
+													<%= link_to image_tag('../images/Kalender/Wolke_Bewertung_inaktiv.png', :title => "hallo", :mouseover => '../images/Kalender/Wolke_Bewertung_aktiv.png', :border=>0), :action => 'addCloud', :id => event.user.id, :controller => "users", :event_id => event.id %>
 												</span>
 												<span title="positiv bewerten">
 													<%= link_to image_tag('../images/Kalender/Stern_Bewertung_inaktiv.png', :mouseover => '../images/Kalender/Stern_Bewertung_aktiv.png', :border=>0), :action => 'addStar', :id => event.user.id, :controller => "users", :event_id => event.id %>
