@@ -27,10 +27,4 @@ Factory.define :event do |e|
 	e.start_on Date.today
 end
 
-#Factory.define :video do |v|
-#	v.name "TestName"
-#	v.beschreibung "Test Beschreibung"
-#	v.active 1
-#	v.user_id 1
-#	v.video File.new(File.join(Rails.root, "/test/files/", "Blumen.png"))
-#end
+
