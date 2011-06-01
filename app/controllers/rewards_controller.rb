@@ -54,6 +54,8 @@ class RewardsController < ApplicationController
   def create
     @calendar = Calendar.find(params[:calendar_id])
     @reward = @calendar.rewards.build(params[:reward])
+		points = {1 => 1, 2 => 2, 3 => 3, 5 => 5, 10 => 10, 15 => 15, 20 => 20,30 => 30, 60 => 60}
+		@points = points.sort
 
     respond_to do |format|
       if @reward.save
